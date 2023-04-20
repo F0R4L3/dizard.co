@@ -1,554 +1,943 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REMAKE DISCORD OR GAY!!1</title> <!-- [REMAKE DISCORD OR GAY!!1] -> [Dizacord.bobux]-->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REMAKE DISCORD OR GAY!!1</title>
+  <!--! [REMAKE DISCORD OR GAY!!1] -> [Dizacord.bobux]-->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<!-- TODO 
-[UNCOMPLETE] 1. Some font have regular font-family. Change it.
-[COMPLETE] 2. Add a reactive DOM. And for a div, please on the class add the prefix "&", as a indicator. Example:
-<div class="Torrent">Torrent is best!</div>
-<button>Cool</button> <-- If this is pressed the DOM Torrent will change to another Torrent class which $Torrent, or $$Torrent
-<div class="&Leon(.Torrent)">Torrent is cool!</div>
-<div class="&&Nig-(.Torrent)">Torrent is amazing!</div>
-[UNCOMPLETE] 3. Make this website capable of fetching via Discord API, such Fetching Discord Profile, Description. (OPTIONAL)
-[COMPLETE] 4. Make the webpage stable at different zoom level.
-[UNCOMPLETE] 5. Make the webpage available for any devices (PC, laptop, Phone, Tablet)
-[NEVER] 6. Change the webpage title, I mean why tf would you say REMAKE DISCORD OR GAY!!1
-[UNCOMPLETE] 7. Add Website credit, information
-[UNCOMPLETE] 7. Add Different status at friend list
+<!-- 
+todo[UNCOMPLETE] 1. Some font have regular font-family. Change it.
+todo[COMPLETE] 2. Add a reactive DOM. And for a div, please on the class add the prefix "&", as a indicator. Example:
+*<div class="Torrent">Torrent is best!</div>
+*<button>Cool</button> <-- If this is pressed the DOM Torrent will change to another Torrent class which $Torrent, or $$Torrent
+*<div class="&Leon(.Torrent)">Torrent is cool!</div>
+*<div class="&&Nig-(.Torrent)">Torrent is amazing!</div>
+todo[UNCOMPLETE] 3. Make this website capable of fetching via Discord API, such Fetching Discord Profile, Description. (OPTIONAL)
+todo[COMPLETE] 4. Make the webpage stable at different zoom level.
+todo[UNCOMPLETE] 5. Make the webpage available for any devices (PC, laptop, Phone, Tablet)
+todo[NEVER] 6. Change the webpage title, I mean why tf would you say REMAKE DISCORD OR GAY!!1
+todo[UNCOMPLETE] 7. Add Website credit, information
+todo[UNCOMPLETE] 7. Add Different status at friend list
+* Font used in discord.com
+-font-primary: "gg sans","Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+-font-display: "gg sans","Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+-font-headline: "ABC Ginto Nord","Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 -->
 <!-- ALERT 
-1. The point of this website if focusing on Introducement Template (again), so please DO NOT add useless object.
-2. For complex DOM manipulation, please considering use JQuerry. (OPTIONAL)(Again if you don't wanna have your eyes dry, use it. This might apply for my dad.)
+!1. The point of this website if focusing on Introducement Template (again), so please DO NOT add useless object.
+!2. For complex DOM manipulation, please considering use JQuerry. (OPTIONAL)(Again if you don't wanna have your eyes dry, use it. This might apply for my dad.)
 -->
+
 <body>
-    <div class="container h-screen">
-        <div class="flex h-screen w-screen">
-            <div id="loader" class="bg-gray-dc-server fixed inset-0 z-50 flex justify-center items-center">
-              <div id="loading-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-dc-break bg-opacity-75">
-                <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-sky-400"></div>
-              </div>
-              <p id="IP-fetcher-fake" class="fixed inset-0 z-50 flex items-center justify-center bg-opacity-75 mt-60 font-bold text-green-300" style="text-shadow: 0 0px 20px rgb(130, 255, 126);">HELLO!</p>
-            </div>
+  <div class="container h-screen">
+    <div class="flex h-screen w-screen">
+      <!-- Loading Thingy when Webpage loaded -->
+      <div id="loader" class="bg-gray-dc-server fixed inset-0 z-50 flex justify-center items-center">
+        <div id="loading-overlay"
+          class="flex-1 fixed inset-0 z-50 flex items-center justify-center bg-gray-dc-break bg-opacity-75">
+          <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-sky-400"
+            style="box-shadow: 0px 0px 20px 0px rgb(68 168 255 / 17%);"></div>
+        </div>
+        <p id="IP-fetcher-fake"
+          class="fixed inset-0 z-50 flex items-center justify-center bg-opacity-75 mt-60 font-bold text-sky-300"
+          style="text-shadow: 0 0px 20px rgb(68, 168, 255);">HELLO!</p>
+        <div class="mt-[60%] z-50 bg-gray-900 rounded-md">
+          <code id="IP-fetcher-fake-terminal"
+            class="text-blue-700 font-mono p-2 rounded-md bg-gray-900 shadow-md z-50 inset-1">
+           $
+          </code>
+        </div>
+      </div>
 
-            
 
-            <!-- Server Navigation-->
-            <div id="nav" class="bg-gray-dc-nav pt-21 min-w-90 h-full" style="width:72px;">
-            <div id="dm" class="cursor-pointer pt-21 flex justify-center items-center mx-auto relative pt-2 flex-col" style="border-radius:15px;width: 50px;height: 50px;top: 10px;background-color: #5865f2;"> <!-- 5865f2-->
-                <svg width="73px" height="73px" viewBox="-64 -64 384.00 384.00" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z" fill="#dbdee1" fill-rule="nonzero"> </path> </g> </g></svg>
-                <div id="break?" class="bg-gray-dc-break rounded-2xl w-12 h-1 absolute" style="border-radius: 15px;
+
+      <!-- Server Navigation-->
+      <div id="nav" class="bg-gray-dc-nav pt-21 min-w-90 h-full" style="width:72px;">
+        <div id="dm" class="cursor-pointer pt-21 flex justify-center items-center mx-auto relative pt-2 flex-col"
+          style="border-radius:15px;width: 50px;height: 50px;top: 10px;background-color: #5865f2;">
+          <!-- 5865f2-->
+          <svg width="73px" height="73px" viewBox="-64 -64 384.00 384.00" version="1.1"
+            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid"
+            fill="#000000">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <g>
+                <path
+                  d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z"
+                  fill="#dbdee1" fill-rule="nonzero"> </path>
+              </g>
+            </g>
+          </svg>
+          <div id="break?" class="bg-gray-dc-break rounded-2xl w-12 h-1 absolute" style="border-radius: 15px;
                 top: 15px;
                 margin-top: 45px;"></div>
-                <!-- On Discord, There are a White outline which show the server is on hovered, focused, or not. Add this.-->
-                <!-- <div id="dm-outline" class="pt-21 mx-auto pt-2 rounded-full" style="width: 3px;height: 50px;top: 10px;background-color: #ffffff;position: fixed;margin-right: 70px;"></div> -->
-                <div class="tooltip hidden absolute left-full w-32 py-1 px-2 bg-gray-800 rounded text-white transform translate-x-[-15px] transition duration-500 ease-in-out shadow-lg z-100">Direct Messages<div class="tooltip-triangle-left bg-gray-800 w-2 h-2 absolute left-[-2px] bottom-3 transform rotate-45 z-0"></div></div>
-                
+          <!-- On Discord, There are a White outline which show the server is on hovered, focused, or not. Add this.-->
+          <!-- <div id="dm-outline" class="pt-21 mx-auto pt-2 rounded-full" style="width: 3px;height: 50px;top: 10px;background-color: #ffffff;position: fixed;margin-right: 70px;"></div> -->
+          <div
+            class="tooltip hidden absolute left-full w-32 py-1 px-2 bg-gray-800 rounded text-white transform translate-x-[-15px] transition duration-500 ease-in-out shadow-lg z-100">
+            Direct Messages<div
+              class="tooltip-triangle-left bg-gray-800 w-2 h-2 absolute left-[-2px] bottom-3 transform rotate-45 z-0">
             </div>
-            <div id="server" class="Pic flex-2 justify-center bg-green-500 relative cursor-pointer place-items-center rounded-full" style="width: 50px;height: 50px;top: 40px;margin-left: 10px;margin-right: 5px;background: url('https://i.etsystatic.com/12618089/r/il/8d5ca6/2007831845/il_794xN.2007831845_bkg3.jpg');background-size: cover;">
-                <div class="tooltip hidden absolute left-full w-24 py-1 px-2 bg-gray-800 rounded text-white transform translate-x-[-15px] transition duration-500 ease-in-out shadow-lg z-100">Who Am I?<div class="tooltip-triangle-left bg-gray-800 w-2 h-2 absolute left-[-2px] bottom-3 transform rotate-45 z-0"></div></div>
+          </div>
+
+        </div>
+        <div id="server"
+          class="Pic flex-2 justify-center bg-green-500 relative cursor-pointer place-items-center rounded-full"
+          style="width: 50px;height: 50px;top: 40px;margin-left: 10px;margin-right: 5px;background: url('https://i.etsystatic.com/12618089/r/il/8d5ca6/2007831845/il_794xN.2007831845_bkg3.jpg');background-size: cover;">
+          <div
+            class="tooltip hidden absolute left-full w-24 py-1 px-2 bg-gray-800 rounded text-white transform translate-x-[-15px] transition duration-500 ease-in-out shadow-lg z-100">
+            Who Am I?<div
+              class="tooltip-triangle-left bg-gray-800 w-2 h-2 absolute left-[-2px] bottom-3 transform rotate-45 z-0">
             </div>
-            <div id="server" class="EX flex-3 justify-center  bg-gray-dc-server relative cursor-pointer rounded-full" style="width: 50px;height: 50px;top: 40px;margin-left: 10px;margin-right: 15px;">
-                <div class="tooltip hidden absolute left-full w-28 py-1 px-2 bg-gray-800 rounded text-white transform translate-x-[-15px] transition duration-500 ease-in-out shadow-lg z-100">Add a Server<div class="tooltip-triangle-left bg-gray-800 w-2 h-2 absolute left-[-2px] bottom-3 transform rotate-45 z-0"></div></div>
-                <svg viewBox="-4.8 -4.8 25.60 25.60" xmlns="http://www.w3.org/2000/svg" version="1.1" fill="none" stroke="#23a559" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" transform="rotate(45)"><g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.16"></g><g id="SVGRepo_iconCarrier"> <path d="m11.25 4.75-6.5 6.5m0-6.5 6.5 6.5"></path> </g></svg>
+          </div>
+        </div>
+        <div id="server" class="EX flex-3 justify-center  bg-gray-dc-server relative cursor-pointer rounded-full"
+          style="width: 50px;height: 50px;top: 40px;margin-left: 10px;margin-right: 15px;">
+          <div
+            class="tooltip hidden absolute left-full w-28 py-1 px-2 bg-gray-800 rounded text-white transform translate-x-[-15px] transition duration-500 ease-in-out shadow-lg z-100">
+            Add a Server<div
+              class="tooltip-triangle-left bg-gray-800 w-2 h-2 absolute left-[-2px] bottom-3 transform rotate-45 z-0">
             </div>
-            <div id="server" class="CO flex-4 justify-center  bg-gray-dc-server relative cursor-pointer rounded-full " style="width: 50px;height: 50px;top: 40px;margin-left: 10px;margin-right: 15px;">
-                <div class="tooltip hidden absolute left-full w-28 py-1 px-2 bg-gray-800 rounded text-white transform translate-x-[-15px] transition duration-500 ease-in-out shadow-lg z-100">Configuration<div class="tooltip-triangle-left bg-gray-800 w-2 h-2 absolute left-[-2px] bottom-3 transform rotate-45 z-0"></div></div>
-                <svg viewBox="-7.2 -7.2 38.40 38.40" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#23a559" stroke-width="0.00024000000000000003"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.384"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 8.00002C9.79085 8.00002 7.99999 9.79088 7.99999 12C7.99999 14.2092 9.79085 16 12 16C14.2091 16 16 14.2092 16 12C16 9.79088 14.2091 8.00002 12 8.00002ZM9.99999 12C9.99999 10.8955 10.8954 10 12 10C13.1046 10 14 10.8955 14 12C14 13.1046 13.1046 14 12 14C10.8954 14 9.99999 13.1046 9.99999 12Z" fill="#34d547"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 8.00002C9.79085 8.00002 7.99999 9.79088 7.99999 12C7.99999 14.2092 9.79085 16 12 16C14.2091 16 16 14.2092 16 12C16 9.79088 14.2091 8.00002 12 8.00002ZM9.99999 12C9.99999 10.8955 10.8954 10 12 10C13.1046 10 14 10.8955 14 12C14 13.1046 13.1046 14 12 14C10.8954 14 9.99999 13.1046 9.99999 12Z" fill="#34d547"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M10.7673 1.01709C10.9925 0.999829 11.2454 0.99993 11.4516 1.00001L12.5484 1.00001C12.7546 0.99993 13.0075 0.999829 13.2327 1.01709C13.4989 1.03749 13.8678 1.08936 14.2634 1.26937C14.7635 1.49689 15.1915 1.85736 15.5007 2.31147C15.7454 2.67075 15.8592 3.0255 15.9246 3.2843C15.9799 3.50334 16.0228 3.75249 16.0577 3.9557L16.1993 4.77635L16.2021 4.77788C16.2369 4.79712 16.2715 4.81659 16.306 4.8363L16.3086 4.83774L17.2455 4.49865C17.4356 4.42978 17.6693 4.34509 17.8835 4.28543C18.1371 4.2148 18.4954 4.13889 18.9216 4.17026C19.4614 4.20998 19.9803 4.39497 20.4235 4.70563C20.7734 4.95095 21.0029 5.23636 21.1546 5.4515C21.2829 5.63326 21.4103 5.84671 21.514 6.02029L22.0158 6.86003C22.1256 7.04345 22.2594 7.26713 22.3627 7.47527C22.4843 7.7203 22.6328 8.07474 22.6777 8.52067C22.7341 9.08222 22.6311 9.64831 22.3803 10.1539C22.1811 10.5554 21.9171 10.8347 21.7169 11.0212C21.5469 11.1795 21.3428 11.3417 21.1755 11.4746L20.5 12L21.1755 12.5254C21.3428 12.6584 21.5469 12.8205 21.7169 12.9789C21.9171 13.1653 22.1811 13.4446 22.3802 13.8461C22.631 14.3517 22.7341 14.9178 22.6776 15.4794C22.6328 15.9253 22.4842 16.2797 22.3626 16.5248C22.2593 16.7329 22.1255 16.9566 22.0158 17.14L21.5138 17.9799C21.4102 18.1535 21.2828 18.3668 21.1546 18.5485C21.0028 18.7637 20.7734 19.0491 20.4234 19.2944C19.9803 19.6051 19.4613 19.7901 18.9216 19.8298C18.4954 19.8612 18.1371 19.7852 17.8835 19.7146C17.6692 19.6549 17.4355 19.5703 17.2454 19.5014L16.3085 19.1623L16.306 19.1638C16.2715 19.1835 16.2369 19.2029 16.2021 19.2222L16.1993 19.2237L16.0577 20.0443C16.0228 20.2475 15.9799 20.4967 15.9246 20.7157C15.8592 20.9745 15.7454 21.3293 15.5007 21.6886C15.1915 22.1427 14.7635 22.5032 14.2634 22.7307C13.8678 22.9107 13.4989 22.9626 13.2327 22.983C13.0074 23.0002 12.7546 23.0001 12.5484 23H11.4516C11.2454 23.0001 10.9925 23.0002 10.7673 22.983C10.5011 22.9626 10.1322 22.9107 9.73655 22.7307C9.23648 22.5032 8.80849 22.1427 8.49926 21.6886C8.25461 21.3293 8.14077 20.9745 8.07542 20.7157C8.02011 20.4967 7.97723 20.2475 7.94225 20.0443L7.80068 19.2237L7.79791 19.2222C7.7631 19.2029 7.72845 19.1835 7.69396 19.1637L7.69142 19.1623L6.75458 19.5014C6.5645 19.5702 6.33078 19.6549 6.11651 19.7146C5.86288 19.7852 5.50463 19.8611 5.07841 19.8298C4.53866 19.7901 4.01971 19.6051 3.57654 19.2944C3.2266 19.0491 2.99714 18.7637 2.84539 18.5485C2.71718 18.3668 2.58974 18.1534 2.4861 17.9798L1.98418 17.14C1.87447 16.9566 1.74067 16.7329 1.63737 16.5248C1.51575 16.2797 1.36719 15.9253 1.32235 15.4794C1.26588 14.9178 1.36897 14.3517 1.61976 13.8461C1.81892 13.4446 2.08289 13.1653 2.28308 12.9789C2.45312 12.8205 2.65717 12.6584 2.82449 12.5254L3.47844 12.0054V11.9947L2.82445 11.4746C2.65712 11.3417 2.45308 11.1795 2.28304 11.0212C2.08285 10.8347 1.81888 10.5554 1.61972 10.1539C1.36893 9.64832 1.26584 9.08224 1.3223 8.52069C1.36714 8.07476 1.51571 7.72032 1.63732 7.47528C1.74062 7.26715 1.87443 7.04347 1.98414 6.86005L2.48605 6.02026C2.58969 5.84669 2.71714 5.63326 2.84534 5.45151C2.9971 5.23637 3.22655 4.95096 3.5765 4.70565C4.01966 4.39498 4.53862 4.20999 5.07837 4.17027C5.50458 4.1389 5.86284 4.21481 6.11646 4.28544C6.33072 4.34511 6.56444 4.4298 6.75451 4.49867L7.69141 4.83775L7.69394 4.8363C7.72844 4.8166 7.7631 4.79712 7.79791 4.77788L7.80068 4.77635L7.94225 3.95571C7.97723 3.7525 8.02011 3.50334 8.07542 3.2843C8.14077 3.0255 8.25461 2.67075 8.49926 2.31147C8.80849 1.85736 9.23648 1.49689 9.73655 1.26937C10.1322 1.08936 10.5011 1.03749 10.7673 1.01709ZM14.0938 4.3363C14.011 3.85634 13.9696 3.61637 13.8476 3.43717C13.7445 3.2858 13.6019 3.16564 13.4352 3.0898C13.2378 3.00002 12.9943 3.00002 12.5073 3.00002H11.4927C11.0057 3.00002 10.7621 3.00002 10.5648 3.0898C10.3981 3.16564 10.2555 3.2858 10.1524 3.43717C10.0304 3.61637 9.98895 3.85634 9.90615 4.3363L9.75012 5.24064C9.69445 5.56333 9.66662 5.72467 9.60765 5.84869C9.54975 5.97047 9.50241 6.03703 9.40636 6.13166C9.30853 6.22804 9.12753 6.3281 8.76554 6.52822C8.73884 6.54298 8.71227 6.55791 8.68582 6.57302C8.33956 6.77078 8.16643 6.86966 8.03785 6.90314C7.91158 6.93602 7.83293 6.94279 7.70289 6.93196C7.57049 6.92094 7.42216 6.86726 7.12551 6.7599L6.11194 6.39308C5.66271 6.2305 5.43809 6.14921 5.22515 6.16488C5.04524 6.17811 4.87225 6.23978 4.72453 6.34333C4.5497 6.46589 4.42715 6.67094 4.18206 7.08103L3.72269 7.84965C3.46394 8.2826 3.33456 8.49907 3.31227 8.72078C3.29345 8.90796 3.32781 9.09665 3.41141 9.26519C3.51042 9.4648 3.7078 9.62177 4.10256 9.9357L4.82745 10.5122C5.07927 10.7124 5.20518 10.8126 5.28411 10.9199C5.36944 11.036 5.40583 11.1114 5.44354 11.2504C5.47844 11.379 5.47844 11.586 5.47844 12C5.47844 12.414 5.47844 12.621 5.44354 12.7497C5.40582 12.8887 5.36944 12.9641 5.28413 13.0801C5.20518 13.1875 5.07927 13.2876 4.82743 13.4879L4.10261 14.0643C3.70785 14.3783 3.51047 14.5352 3.41145 14.7349C3.32785 14.9034 3.29349 15.0921 3.31231 15.2793C3.33461 15.501 3.46398 15.7174 3.72273 16.1504L4.1821 16.919C4.4272 17.3291 4.54974 17.5342 4.72457 17.6567C4.8723 17.7603 5.04528 17.8219 5.2252 17.8352C5.43813 17.8508 5.66275 17.7695 6.11199 17.607L7.12553 17.2402C7.42216 17.1328 7.5705 17.0791 7.7029 17.0681C7.83294 17.0573 7.91159 17.064 8.03786 17.0969C8.16644 17.1304 8.33956 17.2293 8.68582 17.427C8.71228 17.4421 8.73885 17.4571 8.76554 17.4718C9.12753 17.6719 9.30853 17.772 9.40635 17.8684C9.50241 17.963 9.54975 18.0296 9.60765 18.1514C9.66662 18.2754 9.69445 18.4367 9.75012 18.7594L9.90615 19.6637C9.98895 20.1437 10.0304 20.3837 10.1524 20.5629C10.2555 20.7142 10.3981 20.8344 10.5648 20.9102C10.7621 21 11.0057 21 11.4927 21H12.5073C12.9943 21 13.2378 21 13.4352 20.9102C13.6019 20.8344 13.7445 20.7142 13.8476 20.5629C13.9696 20.3837 14.011 20.1437 14.0938 19.6637L14.2499 18.7594C14.3055 18.4367 14.3334 18.2754 14.3923 18.1514C14.4502 18.0296 14.4976 17.963 14.5936 17.8684C14.6915 17.772 14.8725 17.6719 15.2344 17.4718C15.2611 17.4571 15.2877 17.4421 15.3141 17.427C15.6604 17.2293 15.8335 17.1304 15.9621 17.0969C16.0884 17.064 16.167 17.0573 16.2971 17.0681C16.4295 17.0791 16.5778 17.1328 16.8744 17.2402L17.888 17.607C18.3372 17.7696 18.5619 17.8509 18.7748 17.8352C18.9547 17.8219 19.1277 17.7603 19.2754 17.6567C19.4502 17.5342 19.5728 17.3291 19.8179 16.919L20.2773 16.1504C20.536 15.7175 20.6654 15.501 20.6877 15.2793C20.7065 15.0921 20.6721 14.9034 20.5885 14.7349C20.4895 14.5353 20.2921 14.3783 19.8974 14.0643L19.1726 13.4879C18.9207 13.2876 18.7948 13.1875 18.7159 13.0801C18.6306 12.9641 18.5942 12.8887 18.5564 12.7497C18.5215 12.6211 18.5215 12.414 18.5215 12C18.5215 11.586 18.5215 11.379 18.5564 11.2504C18.5942 11.1114 18.6306 11.036 18.7159 10.9199C18.7948 10.8126 18.9207 10.7124 19.1725 10.5122L19.8974 9.9357C20.2922 9.62176 20.4896 9.46479 20.5886 9.26517C20.6722 9.09664 20.7065 8.90795 20.6877 8.72076C20.6654 8.49906 20.5361 8.28259 20.2773 7.84964L19.8179 7.08102C19.5728 6.67093 19.4503 6.46588 19.2755 6.34332C19.1277 6.23977 18.9548 6.1781 18.7748 6.16486C18.5619 6.14919 18.3373 6.23048 17.888 6.39307L16.8745 6.75989C16.5778 6.86725 16.4295 6.92093 16.2971 6.93195C16.167 6.94278 16.0884 6.93601 15.9621 6.90313C15.8335 6.86965 15.6604 6.77077 15.3142 6.57302C15.2877 6.55791 15.2611 6.54298 15.2345 6.52822C14.8725 6.3281 14.6915 6.22804 14.5936 6.13166C14.4976 6.03703 14.4502 5.97047 14.3923 5.84869C14.3334 5.72467 14.3055 5.56332 14.2499 5.24064L14.0938 4.3363Z" fill="#23a559"></path> </g></svg>
+          </div>
+          <svg viewBox="-4.8 -4.8 25.60 25.60" xmlns="http://www.w3.org/2000/svg" version="1.1" fill="none"
+            stroke="#23a559" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" transform="rotate(45)">
+            <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
+              stroke-width="0.16"></g>
+            <g id="SVGRepo_iconCarrier">
+              <path d="m11.25 4.75-6.5 6.5m0-6.5 6.5 6.5"></path>
+            </g>
+          </svg>
+        </div>
+        <div id="server" class="CO flex-4 justify-center  bg-gray-dc-server relative cursor-pointer rounded-full "
+          style="width: 50px;height: 50px;top: 40px;margin-left: 10px;margin-right: 15px;">
+          <div
+            class="tooltip hidden absolute left-full w-28 py-1 px-2 bg-gray-800 rounded text-white transform translate-x-[-15px] transition duration-500 ease-in-out shadow-lg z-100">
+            Configuration<div
+              class="tooltip-triangle-left bg-gray-800 w-2 h-2 absolute left-[-2px] bottom-3 transform rotate-45 z-0">
             </div>
-            </div>
+          </div>
+          <svg viewBox="-7.2 -7.2 38.40 38.40" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#23a559"
+            stroke-width="0.00024000000000000003">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
+              stroke-width="0.384"></g>
+            <g id="SVGRepo_iconCarrier">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M12 8.00002C9.79085 8.00002 7.99999 9.79088 7.99999 12C7.99999 14.2092 9.79085 16 12 16C14.2091 16 16 14.2092 16 12C16 9.79088 14.2091 8.00002 12 8.00002ZM9.99999 12C9.99999 10.8955 10.8954 10 12 10C13.1046 10 14 10.8955 14 12C14 13.1046 13.1046 14 12 14C10.8954 14 9.99999 13.1046 9.99999 12Z"
+                fill="#34d547"></path>
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M12 8.00002C9.79085 8.00002 7.99999 9.79088 7.99999 12C7.99999 14.2092 9.79085 16 12 16C14.2091 16 16 14.2092 16 12C16 9.79088 14.2091 8.00002 12 8.00002ZM9.99999 12C9.99999 10.8955 10.8954 10 12 10C13.1046 10 14 10.8955 14 12C14 13.1046 13.1046 14 12 14C10.8954 14 9.99999 13.1046 9.99999 12Z"
+                fill="#34d547"></path>
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M10.7673 1.01709C10.9925 0.999829 11.2454 0.99993 11.4516 1.00001L12.5484 1.00001C12.7546 0.99993 13.0075 0.999829 13.2327 1.01709C13.4989 1.03749 13.8678 1.08936 14.2634 1.26937C14.7635 1.49689 15.1915 1.85736 15.5007 2.31147C15.7454 2.67075 15.8592 3.0255 15.9246 3.2843C15.9799 3.50334 16.0228 3.75249 16.0577 3.9557L16.1993 4.77635L16.2021 4.77788C16.2369 4.79712 16.2715 4.81659 16.306 4.8363L16.3086 4.83774L17.2455 4.49865C17.4356 4.42978 17.6693 4.34509 17.8835 4.28543C18.1371 4.2148 18.4954 4.13889 18.9216 4.17026C19.4614 4.20998 19.9803 4.39497 20.4235 4.70563C20.7734 4.95095 21.0029 5.23636 21.1546 5.4515C21.2829 5.63326 21.4103 5.84671 21.514 6.02029L22.0158 6.86003C22.1256 7.04345 22.2594 7.26713 22.3627 7.47527C22.4843 7.7203 22.6328 8.07474 22.6777 8.52067C22.7341 9.08222 22.6311 9.64831 22.3803 10.1539C22.1811 10.5554 21.9171 10.8347 21.7169 11.0212C21.5469 11.1795 21.3428 11.3417 21.1755 11.4746L20.5 12L21.1755 12.5254C21.3428 12.6584 21.5469 12.8205 21.7169 12.9789C21.9171 13.1653 22.1811 13.4446 22.3802 13.8461C22.631 14.3517 22.7341 14.9178 22.6776 15.4794C22.6328 15.9253 22.4842 16.2797 22.3626 16.5248C22.2593 16.7329 22.1255 16.9566 22.0158 17.14L21.5138 17.9799C21.4102 18.1535 21.2828 18.3668 21.1546 18.5485C21.0028 18.7637 20.7734 19.0491 20.4234 19.2944C19.9803 19.6051 19.4613 19.7901 18.9216 19.8298C18.4954 19.8612 18.1371 19.7852 17.8835 19.7146C17.6692 19.6549 17.4355 19.5703 17.2454 19.5014L16.3085 19.1623L16.306 19.1638C16.2715 19.1835 16.2369 19.2029 16.2021 19.2222L16.1993 19.2237L16.0577 20.0443C16.0228 20.2475 15.9799 20.4967 15.9246 20.7157C15.8592 20.9745 15.7454 21.3293 15.5007 21.6886C15.1915 22.1427 14.7635 22.5032 14.2634 22.7307C13.8678 22.9107 13.4989 22.9626 13.2327 22.983C13.0074 23.0002 12.7546 23.0001 12.5484 23H11.4516C11.2454 23.0001 10.9925 23.0002 10.7673 22.983C10.5011 22.9626 10.1322 22.9107 9.73655 22.7307C9.23648 22.5032 8.80849 22.1427 8.49926 21.6886C8.25461 21.3293 8.14077 20.9745 8.07542 20.7157C8.02011 20.4967 7.97723 20.2475 7.94225 20.0443L7.80068 19.2237L7.79791 19.2222C7.7631 19.2029 7.72845 19.1835 7.69396 19.1637L7.69142 19.1623L6.75458 19.5014C6.5645 19.5702 6.33078 19.6549 6.11651 19.7146C5.86288 19.7852 5.50463 19.8611 5.07841 19.8298C4.53866 19.7901 4.01971 19.6051 3.57654 19.2944C3.2266 19.0491 2.99714 18.7637 2.84539 18.5485C2.71718 18.3668 2.58974 18.1534 2.4861 17.9798L1.98418 17.14C1.87447 16.9566 1.74067 16.7329 1.63737 16.5248C1.51575 16.2797 1.36719 15.9253 1.32235 15.4794C1.26588 14.9178 1.36897 14.3517 1.61976 13.8461C1.81892 13.4446 2.08289 13.1653 2.28308 12.9789C2.45312 12.8205 2.65717 12.6584 2.82449 12.5254L3.47844 12.0054V11.9947L2.82445 11.4746C2.65712 11.3417 2.45308 11.1795 2.28304 11.0212C2.08285 10.8347 1.81888 10.5554 1.61972 10.1539C1.36893 9.64832 1.26584 9.08224 1.3223 8.52069C1.36714 8.07476 1.51571 7.72032 1.63732 7.47528C1.74062 7.26715 1.87443 7.04347 1.98414 6.86005L2.48605 6.02026C2.58969 5.84669 2.71714 5.63326 2.84534 5.45151C2.9971 5.23637 3.22655 4.95096 3.5765 4.70565C4.01966 4.39498 4.53862 4.20999 5.07837 4.17027C5.50458 4.1389 5.86284 4.21481 6.11646 4.28544C6.33072 4.34511 6.56444 4.4298 6.75451 4.49867L7.69141 4.83775L7.69394 4.8363C7.72844 4.8166 7.7631 4.79712 7.79791 4.77788L7.80068 4.77635L7.94225 3.95571C7.97723 3.7525 8.02011 3.50334 8.07542 3.2843C8.14077 3.0255 8.25461 2.67075 8.49926 2.31147C8.80849 1.85736 9.23648 1.49689 9.73655 1.26937C10.1322 1.08936 10.5011 1.03749 10.7673 1.01709ZM14.0938 4.3363C14.011 3.85634 13.9696 3.61637 13.8476 3.43717C13.7445 3.2858 13.6019 3.16564 13.4352 3.0898C13.2378 3.00002 12.9943 3.00002 12.5073 3.00002H11.4927C11.0057 3.00002 10.7621 3.00002 10.5648 3.0898C10.3981 3.16564 10.2555 3.2858 10.1524 3.43717C10.0304 3.61637 9.98895 3.85634 9.90615 4.3363L9.75012 5.24064C9.69445 5.56333 9.66662 5.72467 9.60765 5.84869C9.54975 5.97047 9.50241 6.03703 9.40636 6.13166C9.30853 6.22804 9.12753 6.3281 8.76554 6.52822C8.73884 6.54298 8.71227 6.55791 8.68582 6.57302C8.33956 6.77078 8.16643 6.86966 8.03785 6.90314C7.91158 6.93602 7.83293 6.94279 7.70289 6.93196C7.57049 6.92094 7.42216 6.86726 7.12551 6.7599L6.11194 6.39308C5.66271 6.2305 5.43809 6.14921 5.22515 6.16488C5.04524 6.17811 4.87225 6.23978 4.72453 6.34333C4.5497 6.46589 4.42715 6.67094 4.18206 7.08103L3.72269 7.84965C3.46394 8.2826 3.33456 8.49907 3.31227 8.72078C3.29345 8.90796 3.32781 9.09665 3.41141 9.26519C3.51042 9.4648 3.7078 9.62177 4.10256 9.9357L4.82745 10.5122C5.07927 10.7124 5.20518 10.8126 5.28411 10.9199C5.36944 11.036 5.40583 11.1114 5.44354 11.2504C5.47844 11.379 5.47844 11.586 5.47844 12C5.47844 12.414 5.47844 12.621 5.44354 12.7497C5.40582 12.8887 5.36944 12.9641 5.28413 13.0801C5.20518 13.1875 5.07927 13.2876 4.82743 13.4879L4.10261 14.0643C3.70785 14.3783 3.51047 14.5352 3.41145 14.7349C3.32785 14.9034 3.29349 15.0921 3.31231 15.2793C3.33461 15.501 3.46398 15.7174 3.72273 16.1504L4.1821 16.919C4.4272 17.3291 4.54974 17.5342 4.72457 17.6567C4.8723 17.7603 5.04528 17.8219 5.2252 17.8352C5.43813 17.8508 5.66275 17.7695 6.11199 17.607L7.12553 17.2402C7.42216 17.1328 7.5705 17.0791 7.7029 17.0681C7.83294 17.0573 7.91159 17.064 8.03786 17.0969C8.16644 17.1304 8.33956 17.2293 8.68582 17.427C8.71228 17.4421 8.73885 17.4571 8.76554 17.4718C9.12753 17.6719 9.30853 17.772 9.40635 17.8684C9.50241 17.963 9.54975 18.0296 9.60765 18.1514C9.66662 18.2754 9.69445 18.4367 9.75012 18.7594L9.90615 19.6637C9.98895 20.1437 10.0304 20.3837 10.1524 20.5629C10.2555 20.7142 10.3981 20.8344 10.5648 20.9102C10.7621 21 11.0057 21 11.4927 21H12.5073C12.9943 21 13.2378 21 13.4352 20.9102C13.6019 20.8344 13.7445 20.7142 13.8476 20.5629C13.9696 20.3837 14.011 20.1437 14.0938 19.6637L14.2499 18.7594C14.3055 18.4367 14.3334 18.2754 14.3923 18.1514C14.4502 18.0296 14.4976 17.963 14.5936 17.8684C14.6915 17.772 14.8725 17.6719 15.2344 17.4718C15.2611 17.4571 15.2877 17.4421 15.3141 17.427C15.6604 17.2293 15.8335 17.1304 15.9621 17.0969C16.0884 17.064 16.167 17.0573 16.2971 17.0681C16.4295 17.0791 16.5778 17.1328 16.8744 17.2402L17.888 17.607C18.3372 17.7696 18.5619 17.8509 18.7748 17.8352C18.9547 17.8219 19.1277 17.7603 19.2754 17.6567C19.4502 17.5342 19.5728 17.3291 19.8179 16.919L20.2773 16.1504C20.536 15.7175 20.6654 15.501 20.6877 15.2793C20.7065 15.0921 20.6721 14.9034 20.5885 14.7349C20.4895 14.5353 20.2921 14.3783 19.8974 14.0643L19.1726 13.4879C18.9207 13.2876 18.7948 13.1875 18.7159 13.0801C18.6306 12.9641 18.5942 12.8887 18.5564 12.7497C18.5215 12.6211 18.5215 12.414 18.5215 12C18.5215 11.586 18.5215 11.379 18.5564 11.2504C18.5942 11.1114 18.6306 11.036 18.7159 10.9199C18.7948 10.8126 18.9207 10.7124 19.1725 10.5122L19.8974 9.9357C20.2922 9.62176 20.4896 9.46479 20.5886 9.26517C20.6722 9.09664 20.7065 8.90795 20.6877 8.72076C20.6654 8.49906 20.5361 8.28259 20.2773 7.84964L19.8179 7.08102C19.5728 6.67093 19.4503 6.46588 19.2755 6.34332C19.1277 6.23977 18.9548 6.1781 18.7748 6.16486C18.5619 6.14919 18.3373 6.23048 17.888 6.39307L16.8745 6.75989C16.5778 6.86725 16.4295 6.92093 16.2971 6.93195C16.167 6.94278 16.0884 6.93601 15.9621 6.90313C15.8335 6.86965 15.6604 6.77077 15.3142 6.57302C15.2877 6.55791 15.2611 6.54298 15.2345 6.52822C14.8725 6.3281 14.6915 6.22804 14.5936 6.13166C14.4976 6.03703 14.4502 5.97047 14.3923 5.84869C14.3334 5.72467 14.3055 5.56332 14.2499 5.24064L14.0938 4.3363Z"
+                fill="#23a559"></path>
+            </g>
+          </svg>
+        </div>
+      </div>
 
 
-            <!-- PORTAL #server, #configuration-->
-            <div id="div-where-you-put-chat-and-friend" class="bg-gray-800 pt-21 min-w-90 h-full w-full flex">
-                <div id="chat" class="pt-21 min-w-90 h-full w-full basis-0 flex flex-col">
-                    <div id="dmlist" class="bg-gray-dc-dmlist pt-21 min-w-90 h-full w-44">
-                        <div class="flex flex-col justify-center items-center mr-0">                       
-                            <button id="Friends" class="button-le-dm w-40 rounded-md py-2 px-4 my-2 flex items-center">
-                                <svg fill="#949ba4" width="50" height="50" viewBox="-9.6 -9.6 51.20 51.20" xmlns="http://www.w3.org/2000/svg" stroke="#949ba4" stroke-width="0.00032">
-                                  <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(5.279999999999999,5.279999999999999), scale(0.67)"></g>
-                                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.192"></g>
-                                  <g id="SVGRepo_iconCarrier"><path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z"></path></g>
-                                </svg>
-                                <span class="ha" style="color: #fff;">Friends</span>
-                              </button>
-                            <button id="nitro"class="button-le-dm w-40 rounded-md py-2 px-4 flex items-center">
-                                <svg width="50px" height="50px" viewBox="-7.2 -7.2 38.40 38.40" xmlns="http://www.w3.org/2000/svg" fill="#949ba4" stroke="#949ba4"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title></title> <g id="Complete"> <g id="Code"> <g> <polyline data-name="Right" fill="none" id="Right-2" points="15.5 7 20.5 12 15.5 17" stroke="#949ba4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline> <polyline data-name="Left" fill="none" id="Left-2" points="8.5 7 3.5 12 8.5 17" stroke="#949ba4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline> </g> </g> </g> </g></svg>
-                                <span class="dm-font">Kimochi</span>
-                                <div class="tooltip absolute hidden left-52 w-44 py-1 px-2 bg-gray-800 rounded text-white transform translate-x-[-15px] transition duration-500 ease-in-out shadow-lg z-100">Does Nothing.. really...<div class="tooltip-triangle-left bg-gray-800 w-2 h-2 absolute left-[-2px] bottom-3 transform rotate-45 z-0"></div></div>     
-                            </button>
-                        </div>
-                        <div class="flex flex-col justify-center mr-0">
-                            <p class="dm-font text-left pt-2 ml-3">Direct Messages</p>
-                            <!-- Add a cross SVG after Direct Messages-->
-                        </div>
-                    </div>
-                    <section class="w-full h-12 flex items-center" style="background-color: #232428;">
-                        <div class="mr-2">
-                            <img id="f1" src="https://i.pinimg.com/736x/fa/fc/e1/fafce1b9206d2eaf31e2193808addde7.jpg" alt="" class="rounded-full w-8 h-8 my-2 mx-3">
-                        </div>
-                        <span id="tag-randomizer" class="user relative !text-white dm-font ml-1 text-xs"></span>
-                        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D" class="mic-btn cursor-pointer h-8 w-8 rounded-sl relative items-center justify-center mx-2 flex ml-[10px]" style="background-color: #2b2d31;"><svg class="relative" width="84px" height="24px" viewBox="-5 0 35 25" fill="#b7b7b7" xmlns="http://www.w3.org/2000/svg" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M8 5C8 2.79086 9.79086 1 12 1C14.2091 1 16 2.79086 16 5V12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12V5Z" fill="#b7b7b7"></path> <path d="M6.25 11.8438V12C6.25 13.525 6.8558 14.9875 7.93414 16.0659C9.01247 17.1442 10.475 17.75 12 17.75C13.525 17.75 14.9875 17.1442 16.0659 16.0659C17.1442 14.9875 17.75 13.525 17.75 12V11.8438C17.75 11.2915 18.1977 10.8438 18.75 10.8438H19.25C19.8023 10.8438 20.25 11.2915 20.25 11.8437V12C20.25 14.188 19.3808 16.2865 17.8336 17.8336C16.5842 19.0831 14.9753 19.8903 13.25 20.1548V22C13.25 22.5523 12.8023 23 12.25 23H11.75C11.1977 23 10.75 22.5523 10.75 22V20.1548C9.02471 19.8903 7.41579 19.0831 6.16637 17.8336C4.61919 16.2865 3.75 14.188 3.75 12V11.8438C3.75 11.2915 4.19772 10.8438 4.75 10.8438H5.25C5.80228 10.8438 6.25 11.2915 6.25 11.8438Z" fill="#b7b7b7"></path> </g></svg></a>
-                    </section>
-                </div>
-                <div id="friend" class="bg-gray-dc-server pt-21 h-full w-full flex flex-col md:flex-col md:min-w-90">
-                    <div id="friendnav" class="bg-gray-dc-server border-b-2 nav-border h-10 w-full flex flex-row y">
-                        <div id="Friendsz" class="px-5 flex items-center border-r-2" style="border-color:#3e4047">
-                            <svg fill="#949ba4" width="50" height="50" viewBox="-9.6 -9.6 51.20 51.20" xmlns="http://www.w3.org/2000/svg" stroke="#949ba4" stroke-width="0.00032">
-                                <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(5.279999999999999,5.279999999999999), scale(0.67)"></g>
-                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.192"></g>
-                                <g id="SVGRepo_iconCarrier"><path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z"></path></g>
-                              </svg>
-                            <span class="font-semibold relative top-2 dm-font pb-4 text-left ml-0" style="color:white;">Friends</span>
-                        </div>
-                        <button onclick="document.getElementById('Changar').innerHTML = 'ONLINE - 6';" id="Online" class=" friendnavbtncolor mx-2 my-1.5 rounded-md">Online</button>
-                        <button onclick="document.getElementById('Changar').innerHTML = 'ALL FRIENDS - 6';" id="All" class=" friendnavbtncolor mx-2 my-1.5 rounded-md">All</button>
-                        <button id="Pending" class=" friendnavbtncolor mx-2 my-1.5 rounded-md">Pending</button>
-                        <button id="Blocked" class=" friendnavbtncolor mx-2 my-1.5 rounded-md">Blocked</button>
-                        <button id="AddFriend" class=" cursor-not-allowed friendnavbtncolor mx-2  my-1.5 rounded-md !bg-green-600 !text-white">Add Friend</button>
-                    </div>
-                    <div id="friendlist" class="flex flex-col w-full h-full px-5"> <!--  md:w-3/4 [oh]-->
-                        <span id="Changar"class="!h-6 w-28 mt-6 mb-6 dm-font text-left pt-2 ml-5 !text-white flex-1">ONLINE - 6</span>
-                        <div class=" w-full h-full flex-2 rounded-lg flex flex-col md:flex-col">
-                            <button class="friendobject flex items-center">
-                                <div class="mr-2">
-                                  <img id="f1" src="https://cdn.discordapp.com/avatars/901404605336916018/0401a2b9880eb78e23baa5f846bde122.png?size=1024" alt="" class="rounded-full w-8 h-8">
-                                </div>
-                                <span class="user  relative bottom-3 !text-white dm-font ml-3">Izaxel</span><span id="tags" class="!text-slate-400 sm-font" style="margin-bottom: 27px;">#7452</span>
-                                <span class="status !text-gray-400 sm-font top-5 absolute ml-14">Watching the guy staring at my introduction template </span>
-                                <a href="" class="btn-fren-lead cursor-not-allowed h-8 w-8 rounded-full absolute right-4 items-center justify-center mx-2 flex" style="background-color: #2b2d31;"><svg class="relative" width="84px" height="84px" viewBox="-5 0 35 25" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Interface / Link_Horizontal_Off"> <path id="Vector" d="M8 12H12M12 12L8 8M12 12L20 20M15 8H17C19.2091 8 21 9.79086 21 12C21 13.1947 20.4759 14.2671 19.6455 15M9 16H7C4.79086 16 3 14.2091 3 12C3 9.79086 4.79086 8 7 8H8M8 8L4 4" stroke="#eb2d2d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg></a>
-                            </button>
-                            <button class="friendobject flex items-center">
-                                <div class="mr-2 statuz">
-                                  <img src="https://cdn.discordapp.com/avatars/916151034018144306/98310d7b8baba0cd2cac88bd8e6ec9b0.png?size=1024" alt="" class="Statusrounded rounded-full w-8 h-8">
-                                </div>
-                                <span class="user  relative bottom-3 !text-white dm-font ml-3">seele/veliona</span><span id="tags" class="!text-slate-400 sm-font" style="margin-bottom: 27px;">#9999</span>
-                                <span class="status !text-gray-400 sm-font top-5 absolute ml-14">dont click me... im too dumb to be clicked...</span> <!-- <svg width="64px" height="64px" viewBox="-24 -24 72.00 72.00" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Interface / Link_Horizontal"> <path id="Vector" d="M8 12H16M15 8H17C19.2091 8 21 9.79086 21 12C21 14.2091 19.2091 16 17 16H15M9 8H7C4.79086 8 3 9.79086 3 12C3 14.2091 4.79086 16 7 16H9" stroke="#2ca53a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>-->
-                                <a href="https://rhi-has-no-life.carrd.co/" class="btn-fren-lead cursor-pointer h-8 w-8 rounded-full absolute right-4 items-center justify-center mx-2 flex" style="background-color: #2b2d31;"><svg class="relative" width="84px" height="84px" viewBox="-5 0 35 25" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Interface / Link_Horizontal"> <path id="Vector" d="M8 12H16M15 8H17C19.2091 8 21 9.79086 21 12C21 14.2091 19.2091 16 17 16H15M9 8H7C4.79086 8 3 9.79086 3 12C3 14.2091 4.79086 16 7 16H9" stroke="#2ca53a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg></a>
-                            </button>
-                            <button class="friendobject flex items-center">
-                                <div class="mr-2">
-                                  <img id="f1" src="https://cdn.discordapp.com/avatars/976407720880140318/e81e274850abd511687c80933beed321.png?size=1024" alt="" class="rounded-full w-8 h-8">
-                                </div>
-                                <span class="user  relative bottom-3 !text-white dm-font ml-3">iwkms</span><span id="tags" class="!text-slate-400 sm-font" style="margin-bottom: 27px;">#0021</span>
-                                <span class="status !text-gray-400 sm-font top-5 absolute ml-14">Hi! Click the Green button right there to lead to my profile</span>
-                                <a href="https://vieny.carrd.co/" class="btn-fren-lead cursor-pointer h-8 w-8 rounded-full absolute right-4 items-center justify-center mx-2 flex" style="background-color: #2b2d31;"><svg class="relative" width="84px" height="84px" viewBox="-5 0 35 25" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Interface / Link_Horizontal"> <path id="Vector" d="M8 12H16M15 8H17C19.2091 8 21 9.79086 21 12C21 14.2091 19.2091 16 17 16H15M9 8H7C4.79086 8 3 9.79086 3 12C3 14.2091 4.79086 16 7 16H9" stroke="#2ca53a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg></a>
-                            </button>
-                            <button class="friendobject flex items-center">
-                                <div class="mr-2">
-                                  <img id="f1" src="https://cdn.discordapp.com/avatars/258741301271461890/0674ad45aa828a5b4d52fa8c63153ba5.png?size=1024" alt="" class="rounded-full w-8 h-8">
-                                </div>
-                                <span class="user  relative bottom-3 !text-white dm-font ml-3">NicoDM</span><span id="tags" class="!text-slate-400 sm-font" style="margin-bottom: 27px;">#3788</span>
-                                <span class="status !text-gray-400 sm-font top-5 absolute ml-14">Hi! Click the Green button right there to lead to my profile</span>
-                                <a href="https://nicodm.carrd.co/" class="btn-fren-lead cursor-pointer h-8 w-8 rounded-full absolute right-4 items-center justify-center mx-2 flex" style="background-color: #2b2d31;"><svg class="relative" width="84px" height="84px" viewBox="-5 0 35 25" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Interface / Link_Horizontal"> <path id="Vector" d="M8 12H16M15 8H17C19.2091 8 21 9.79086 21 12C21 14.2091 19.2091 16 17 16H15M9 8H7C4.79086 8 3 9.79086 3 12C3 14.2091 4.79086 16 7 16H9" stroke="#2ca53a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg></a>
-                            </button>
-                            <button class="friendobject flex items-center">
-                                <div class="mr-2">
-                                  <img id="f1" src="https://cdn.discordapp.com/avatars/724409231809314927/e8c460c9a0f0c8191b2c83c5d9e1dff9.png?size=1024" alt="" class="rounded-full w-8 h-8">
-                                </div>
-                                <span class="user  relative bottom-3 !text-white dm-font ml-3">KAESISCOOL</span><span id="tags" class="!text-slate-400 sm-font" style="margin-bottom: 27px;">#6421</span>
-                                <span class="status !text-gray-400 sm-font top-5 absolute ml-14">Hi! Click the Green button right there to lead to my profile</span>
-                                <a href="https://en.pronouns.page/@KAESISCOOL'" class="btn-fren-lead cursor-pointer h-8 w-8 rounded-full absolute right-4 items-center justify-center mx-2 flex" style="background-color: #2b2d31;"><svg class="relative" width="84px" height="84px" viewBox="-5 0 35 25" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Interface / Link_Horizontal"> <path id="Vector" d="M8 12H16M15 8H17C19.2091 8 21 9.79086 21 12C21 14.2091 19.2091 16 17 16H15M9 8H7C4.79086 8 3 9.79086 3 12C3 14.2091 4.79086 16 7 16H9" stroke="#2ca53a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg></a>
-                            </button>
-                            <button class="friendobject flex items-center">
-                                <div class="mr-2">
-                                  <img id="f1" src="https://cdn.discordapp.com/avatars/803387341472661546/fcff03179c5ff0b7eccda4469e0da337.png?size=1024" alt="" class="rounded-full w-8 h-8">
-                                </div>
-                                <span class="user  relative bottom-3 !text-white dm-font ml-3">Rinychan</span><span id="tags" class="!text-slate-400 sm-font" style="margin-bottom: 27px;">#0774</span>
-                                <span class="status !text-gray-400 sm-font top-5 absolute ml-14">Hi! Click the Green button right there to lead to my profile</span>
-                                <a href='https://cookienom.carrd.co/' class="btn-fren-lead cursor-pointer h-8 w-8 rounded-full absolute right-4 items-center justify-center mx-2 flex" style="background-color: #2b2d31;"><svg class="relative" width="84px" height="84px" viewBox="-5 0 35 25" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Interface / Link_Horizontal"> <path id="Vector" d="M8 12H16M15 8H17C19.2091 8 21 9.79086 21 12C21 14.2091 19.2091 16 17 16H15M9 8H7C4.79086 8 3 9.79086 3 12C3 14.2091 4.79086 16 7 16H9" stroke="#2ca53a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg></a>
-                            </button>
-                              <!-- For this one, use class. I won't add stupid classes when I can just put one.-->
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- PORTAL #div-where-you-put-chat-and-friend-->
-            <div id="&portal(.div-where-you-put-chat-and-friend)" class="flex-1 flex overflow-hidden bg-gray-800 pt-21 min-w-90 h-full w-full flex">
-                <div id="channel-nav" class="pt-21 min-w-90 h-full w-full basis-0 flex flex-col">
-                    <div id="channel-list" class="bg-gray-dc-dmlist pt-21 min-w-90 h-full w-44">
-                        <div id="server-title" class="flex flex-col d-flex w-full h-36"> <!-- [For gradient please use normal CSS. this tailwind are hard to read some point]-->
-                            <span class="px-2 text-white my-4" style="font-weight: 600;">My Portofolio :D</span>
-                        </div>
-                        <div class="channels">
-                            <button class="channel w-11/12 h-8 mx-2 my-px rounded-md px-2 bg-[#000000000] hover:bg-[#4a4a4a38] py-0" style="display:inline-flex;justify-content: flex-start;">
-                                <svg class=" mt-[10px] mr-[5px]"style="display:inline-flex;" viewBox="0 0 20 20" height="20px" width="20px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M13 21L17 3" stroke="#808483" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7 21L11 3" stroke="#808483" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M20 9L4 9" stroke="#808483" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M4 15L20 15" stroke="#808483" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                                <span class="mt-[6px] dm-font" style="color:#808483;">WhoAmI</span>
-                            </button>
-                            <button class="channel w-11/12 h-8 mx-2 my-px rounded-md px-2 bg-[#000000000] hover:bg-[#4a4a4a38] py-0" style="display:inline-flex;justify-content: flex-start;">
-                                <svg class=" mt-[10px] mr-[5px]"style="display:inline-flex;" viewBox="0 0 24 24" height="18px" width="18px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 10V7C5.5 5.27609 6.18482 3.62279 7.40381 2.40381C8.62279 1.18482 10.2761 0.5 12 0.5C13.7239 0.5 15.3772 1.18482 16.5962 2.40381C17.8152 3.62279 18.5 5.27609 18.5 7V10H19C20.6569 10 22 11.3431 22 13V20C22 21.6569 20.6569 23 19 23H5C3.34315 23 2 21.6569 2 20V13C2 11.3431 3.34315 10 5 10H5.5ZM9.52513 4.52513C10.1815 3.86875 11.0717 3.5 12 3.5C12.9283 3.5 13.8185 3.86875 14.4749 4.52513C15.1313 5.1815 15.5 6.07174 15.5 7V10H8.5V7C8.5 6.07174 8.86875 5.1815 9.52513 4.52513Z" fill="#808483"></path> </g></svg>
-                                <span class="mt-[6px] dm-font" style="color:#808483;">Credit</span>
-                            </button>
-                        </div>
-                    </div>
-                    <section class="w-full h-12 flex items-center" style="background-color: #232428;">
-                        <div class="mr-2">
-                            <img id="f1" src="https://i.pinimg.com/736x/fa/fc/e1/fafce1b9206d2eaf31e2193808addde7.jpg" alt="" class="rounded-full w-8 h-8 my-2 mx-3">
-                        </div>
-                        <span id="tag-randomizer"class="user relative !text-white dm-font ml-1 text-xs">guest#0152</span>
-                        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D" class="mic-btn cursor-pointer h-8 w-8 rounded-sl relative items-center justify-center mx-2 flex ml-[10px]" style="background-color: #2b2d31;"><svg class="relative" width="84px" height="24px" viewBox="-5 0 35 25" fill="#b7b7b7" xmlns="http://www.w3.org/2000/svg" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M8 5C8 2.79086 9.79086 1 12 1C14.2091 1 16 2.79086 16 5V12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12V5Z" fill="#b7b7b7"></path> <path d="M6.25 11.8438V12C6.25 13.525 6.8558 14.9875 7.93414 16.0659C9.01247 17.1442 10.475 17.75 12 17.75C13.525 17.75 14.9875 17.1442 16.0659 16.0659C17.1442 14.9875 17.75 13.525 17.75 12V11.8438C17.75 11.2915 18.1977 10.8438 18.75 10.8438H19.25C19.8023 10.8438 20.25 11.2915 20.25 11.8437V12C20.25 14.188 19.3808 16.2865 17.8336 17.8336C16.5842 19.0831 14.9753 19.8903 13.25 20.1548V22C13.25 22.5523 12.8023 23 12.25 23H11.75C11.1977 23 10.75 22.5523 10.75 22V20.1548C9.02471 19.8903 7.41579 19.0831 6.16637 17.8336C4.61919 16.2865 3.75 14.188 3.75 12V11.8438C3.75 11.2915 4.19772 10.8438 4.75 10.8438H5.25C5.80228 10.8438 6.25 11.2915 6.25 11.8438Z" fill="#b7b7b7"></path> </g></svg></a>
-                    </section>
-                </div>
-                <div id="navigator" class="z-3 bg-[#313338] fixed border-b-1 border-b-black-25 w-full h-[60px] z-0 ml-[221px] fixed" style="border-bottom-width: 1px;border-bottom-color: #00000029;">
-                    <div class="flex">
-                        <div id="channel-name" class="flex m-[8px]">
-                            <svg class=" mt-[10px] mr-[5px] inline-flex" viewBox="0 0 24 24" height="30px" width="30px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M13 21L17 3" stroke="#808483" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7 21L11 3" stroke="#808483" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M20 9L4 9" stroke="#808483" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M4 15L20 15" stroke="#808483" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                            <span class="relative !text-white text-xs dm-font ml-1 mt-[15px]">WhoAmI</span>
-                        </div>
-                    </div>
-                </div>
-                <div id="chat" class="flex-1 flex flex-col-reverse bg-gray-dc-server h-full w-screen flex flex-col md:flex-col md:min-w-90 justify-end">
-                    <div id="chat-place" class=" overflow-y-auto flex-1 flex flex-col overflow-y-scroll scroll-smooth">
-                        <div class="message flex flex-col mx-2">
-                          <div class="flex visible z-2 mt-20">
-                            <img class=" w-[45px] h-[45px] rounded-full mr-[10px]"src="https://cdn.discordapp.com/avatars/901404605336916018/0401a2b9880eb78e23baa5f846bde122.png?size=1024" alt="avatar" class="rounded-full">
-                            <div>
-                              <h3 class="text-orange-400 font-semibold">Izaxel</h3>
-                              <span class="text-gray-400 text-sm">12:34 PM</span>
-                            </div>
-                          </div>
-                          <div class="chatz -mt-1 ml-10 rounded-lg">
-                            <p class="text-white">Below embed is all my introduction! :D</p>
-                            <div class="embed border-l-8 flex-1 bg-gray-dc-dmlist w-11/12 rounded-md m-4">
-                              <div class="embed-title text-white font-semibold pl-[20px] py-[10px]">
-                              About me
-                              </div>
-                              <div class="embed-content text-white pl-[20px] py-[10px]">
-                                <ul class="list-disc ml-3">
-                                  <li>Name (IRL) : Jordan</li>
-                                  <li> Name (Online) : [Luci4, Azazel/Azazil, Izaxel/Iza, Arzon, Arson, Jordan, Forensic, Oblivion, Axon, Azre]</li>
-                                  <li>Grade : 1st Grade High School</li>
-                                  <li> Age : 15 Years old</li>
-                                  <li>Birthday : 3 March</li>
-                                  <li>Pronouns : He/Him</li>
-                                  <li>Location : Earth, Southeast Asia, Indonesia</li>
-                                  <li>Mental Disorders : None. Cuz I'm better than yall suckerz</li>
-                                  <li>Hobby : Programming, Reading, Debating, Studying (Psychology/Philosophy/Mathematics), Helping people issue (Homework/Mental Issue), Scrolling on Social Media, Talking with people (IRL/Online)</li>
-                                  <li>Ambition : Attorney, Astronout, Philosopher, Psychologist, Neurologist, Spy, Mathematician</li>
-                                  <li>MBTI : INFP (Mix of INTP)</li>
-                                  <li>Sexuality : Straight</li>
-                                  <li>Passion : Being rich, Make a better world for everyone, Travel to mars XD</li>
-                                  <li>Additional : I have Ligyrophobia, and Anger issue. I'm also a Logic/Emotional Person, A Daydreamer :]</li>
-                                </ul>
-                              </div>
-                            </div>
-                            <div class="embed1 border-x-violet-600 border-l-8 flex-1 bg-gray-dc-dmlist w-11/12 rounded-md  m-4">
-                              <div class="embed-title text-white font-semibold pl-[20px] py-[10px]">
-                              Do Not Interact Criteria
-                              </div>
-                              <div class="embed-content text-white pl-[20px] py-[10px]">
-                                <ul class="list-disc ml-3">
-                                  <li class="font-semibold mb-5">I don't have any DNI Criteria. I don't judge people for who they are, whether they're into some pretty weird stuff, scared of others who are different, or have strong opinions on race, religion, or anything else. I understand that everyone's different and has their own viewpoints and choices that make up the world we live in, so I try my best to accept all kinds of thoughts and ways of life. Which mean, anyone can be my friend!</li>
-                                </ul>
-                              </div>
-                            </div>
-                            <div class="embed2 border-x-red-600 border-l-8 flex-1 bg-gray-dc-dmlist w-11/12 rounded-md  m-4">
-                              <div class="embed-title text-white font-semibold pl-[20px] py-[10px]">
-                              Before you Follow
-                              </div>
-                              <div class="embed-content text-white pl-[20px] py-[10px]">
-                                <ul class="list-disc ml-3">
-                                  <li>I love posting dark humour, and frequently ignoring the environment. (Also main reason why I tend to get ban on most servers).</li>
-                                <li>I tend to be late to DM your message.</li>
-                                <li>I tend to be Deceptionist most of the time.</li>
-                                <li>I tend to wait someone to DM me, rather than I DM You.</li>
-                                <li>I am a fast typer.</li>
-                                <li>I have wittyass grammar.</li>
-                                <li>I tend to use slang words.</li>
-                                <li>I tend to be Formal.</li>
-                                <li>I tend to dox people identity online and sharing it Online. If only, You are messing with me.</li>
-                                </ul>
-                              </div>
-                            </div>
-                            <div class="embed2 border-x-yellow-600 border-l-8 flex-1 bg-gray-dc-dmlist w-11/12 rounded-md  m-4">
-                              <div class="embed-title text-white font-semibold pl-[20px] py-[10px]">
-                                Things I Like
-                              </div>
-                              <div class="embed-content text-white pl-[20px] py-[10px]">
-                                <ul class="list-disc ml-3">
-                                  <li>Computer</li>
-                                  <li>You</li>
-                                  <li>Coffee</li>
-                                  <li>Badminton</li>
-                                  <li>Mathematics</li>
-                                  <li>Psychology</li>
-                                  <li>Philosophy</li>
-                                  <li>Politics</li>
-                                  <li>Law</li>
-                                  <li>Astronomy</li>
-                                  <li>Memes</li>
-                                  <li>My Besties</li>
-                                  <li>Listening to Music</li>
-                                  <li>Desert foods</li>
-                                  <li>Red, Black, Orange, and Blue colors</li>
-                                </ul>
-                              </div>
-                            </div>
-                            <div class="embed2 border-x-green-600 border-l-8 flex-1 bg-gray-dc-dmlist w-11/12 rounded-md  m-4">
-                              <div class="embed-title text-white font-semibold pl-[20px] py-[10px]">
-                                Things I Dislike
-                              </div>
-                              <div class="embed-content text-white pl-[20px] py-[10px]">
-                                <ul class="list-disc ml-3">
-                                  <li>Centipede</li>
-                                  <li>My PC for some reason</li>
-                                  <li>When my coffee is out of stock</li>
-                                  <li>My Entrepreneurship teacher *bitch got so hatred that I list her in my introduction template*</li>
-                                  <li>My Anger issue</li>
-                                  <li>Hectic place</li>
-                                  <li>School</li>
-                                </ul>
-                              </div>
-                            </div>
-                            <div class="embed2 border-x-sky-200 border-l-8 flex-1 bg-gray-dc-dmlist w-11/12 rounded-md  m-4">
-                              <div class="embed-title text-white font-semibold pl-[20px] py-[10px]">
-                                My Social Media,<span class="text-red-500 font-semibold pl-[4px] py-[10px]">Also, I'm a Multi Accounter lol</span>
-                              </div>
-                              <div class="embed-content text-white pl-[20px] py-[10px]">
-                                <div id="socmed" class="flex h-full w-full flex-col justify-center">
-                                  <a href="https://twitter.com/BLAlgorithm" class="text-center btn-socmed text-white font-bold py-2 px-4 w-1/3 rounded mx-3 my-2 bg-sky-400 hover:bg-sky-500 active:bg-sky-600">
-                                    Twitter
-                                  </a>
-                                  <a href="https://pin.it/8XR2iti" class="text-center btn-socmed text-white font-bold py-2 px-4 w-1/3 rounded mx-3 my-2 bg-red-700 hover:bg-red-800 active:bg-red-900">
-                                    Pinterest
-                                  </a>
-                                  <a href="https://www.roblox.com/users/2909745662/profile" class="text-center btn-socmed text-white font-bold py-2 px-4 w-1/3 rounded mx-3 my-2 bg-gray-700 hover:bg-gray-800 active:bg-gray-900">
-                                    Roblox
-                                  </a>
-                                  <a href="https://www.roblox.com/users/443293364/profile" class="text-center btn-socmed text-white font-bold py-2 px-4 w-1/3 rounded mx-3 my-2 bg-gray-700 hover:bg-gray-800 active:bg-gray-900">
-                                    Roblox 2
-                                  </a>
-                                  <a href="https://discord.com/users/901404605336916018" class="text-center btn-socmed text-white font-bold py-2 px-4 w-1/3 rounded mx-3 my-2 bg-blue-400 hover:bg-blue-500 active:bg-blue-600">
-                                    Discord
-                                  </a>
-                                  <a href="https://www.instagram.com/crypto_cotangent/" class="text-center btn-socmed text-white font-bold py-2 px-4 w-1/3 rounded mx-3 my-2 bg-blue-400 hover:bg-blue-500 active:bg-blue-600">
-                                    Instagram
-                                  </a>
-                                  <a href="https://www.facebook.com/profile.php?id=100076977514235" class="text-center btn-socmed text-white font-bold py-2 px-4 w-1/3 rounded mx-3 my-2 bg-blue-600 hover:bg-blue-700 active:bg-blue-800">
-                                    Facebook
-                                  </a>
-                                  <a href="https://open.spotify.com/user/31fhrkk5msaij5k3rjcjtrcxwej4" class="text-center btn-socmed text-white font-bold py-2 px-4 w-1/3 rounded mx-3 my-2 bg-green-400 hover:bg-green-500 active:bg-green-600">
-                                    Spotify
-                                  </a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                    <input id="kumiwa"type="search" name="chat" class="px-4 py-2 m-2 bg-[#383a40] border border-gray-700 rounded-full placeholder-black-900 focus:outline-none focus:ring focus:ring-indigo-500 focus:border-indigo-500 text-white" value="">
-                </div>
-                <div id="members" class="w-64 min-w-0 flex-shrink-0 bg-[#2b2d31] h-full w-[300px]">
-                  <div id="online" class="mt-[35%] ml-4 text-gray-400 font-semibold">ONLINE - 1</div>
-                  <div id="userinmembers" class="w-[95%] h-10 mx-2 rounded-lg flex items-center">
-                    <div class="m-2 rounded-full" style="box-shadow: 0 0 0px 1px #313338, 0 0 0px 3px #27a14a, 0 0 2px 3px #27a14a;">
-                      <img src="https://cdn.discordapp.com/avatars/901404605336916018/0401a2b9880eb78e23baa5f846bde122.png?size=1024" alt="" class="Statusrounded rounded-full w-8 h-8">
-                    </div>
-                    <span class="user bottom-3 !text-orange-400 ml-3">Izaxel</span>
-                  </div>
-                  <div id="userinmembers" class="w-[95%] h-10 mx-2 rounded-lg flex items-center">
-                    <div class="m-2 rounded-full" style="box-shadow: 0 0 0px 1px #313338, 0 0 0px 3px #27a14a, 0 0 2px 3px #27a14a;">
-                      <img src="https://i.pinimg.com/736x/fa/fc/e1/fafce1b9206d2eaf31e2193808addde7.jpg" alt="" class="Statusrounded rounded-full w-8 h-8">
-                    </div>
-                    <span class="user bottom-3 !text-orange-400 ml-3">guest</span>
+      <!-- PORTAL #server, #configuration-->
+      <div id="div-where-you-put-chat-and-friend" class="bg-gray-800 pt-21 min-w-90 h-full w-full flex">
+        <div id="chat" class="pt-21 min-w-90 h-full w-full basis-0 flex flex-col">
+          <div id="dmlist" class="bg-gray-dc-dmlist pt-21 min-w-90 h-full w-44">
+            <div class="flex flex-col justify-center items-center mr-0">
+              <button id="Friends" class="button-le-dm w-40 rounded-md py-2 px-4 my-2 flex items-center">
+                <svg fill="#949ba4" width="50" height="50" viewBox="-9.6 -9.6 51.20 51.20"
+                  xmlns="http://www.w3.org/2000/svg" stroke="#949ba4" stroke-width="0.00032">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"
+                    transform="translate(5.279999999999999,5.279999999999999), scale(0.67)"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
+                    stroke-width="0.192"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path
+                      d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z">
+                    </path>
+                  </g>
+                </svg>
+                <span class="ha" style="color: #fff;">Friends</span>
+              </button>
+              <button id="nitro" class="button-le-dm w-40 rounded-md py-2 px-4 flex items-center">
+                <svg width="50px" height="50px" viewBox="-7.2 -7.2 38.40 38.40" xmlns="http://www.w3.org/2000/svg"
+                  fill="#949ba4" stroke="#949ba4">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <title></title>
+                    <g id="Complete">
+                      <g id="Code">
+                        <g>
+                          <polyline data-name="Right" fill="none" id="Right-2" points="15.5 7 20.5 12 15.5 17"
+                            stroke="#949ba4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline>
+                          <polyline data-name="Left" fill="none" id="Left-2" points="8.5 7 3.5 12 8.5 17"
+                            stroke="#949ba4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+                <span class="dm-font">Kimochi</span>
+                <div
+                  class="tooltip absolute hidden left-52 w-44 py-1 px-2 bg-gray-800 rounded text-white transform translate-x-[-15px] transition duration-500 ease-in-out shadow-lg z-100">
+                  Does Nothing.. really...<div
+                    class="tooltip-triangle-left bg-gray-800 w-2 h-2 absolute left-[-2px] bottom-3 transform rotate-45 z-0">
                   </div>
                 </div>
+              </button>
             </div>
+            <div class="flex flex-col justify-center mr-0">
+              <p class="dm-font text-left pt-2 ml-3">Direct Messages</p>
+              <!-- Add a cross SVG after Direct Messages-->
+            </div>
+          </div>
+          <section class="w-full h-12 flex items-center tag-parent" style="background-color: #232428;">
+            <div class="mr-2">
+              <img id="f1" src="https://i.pinimg.com/736x/fa/fc/e1/fafce1b9206d2eaf31e2193808addde7.jpg" alt=""
+                class="rounded-full w-8 h-8 my-2 mx-3">
+            </div>
+            <span id="tag-randomizer" class="user relative !text-white dm-font ml-1 text-xs"></span>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D"
+              class="mic-btn cursor-pointer h-8 w-8 rounded-sl relative items-center justify-center mx-2 flex ml-[10px]"
+              style="background-color: #2b2d31;"><svg class="relative" width="84px" height="24px" viewBox="-5 0 35 25"
+                fill="#b7b7b7" xmlns="http://www.w3.org/2000/svg" stroke="#000000">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    d="M8 5C8 2.79086 9.79086 1 12 1C14.2091 1 16 2.79086 16 5V12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12V5Z"
+                    fill="#b7b7b7"></path>
+                  <path
+                    d="M6.25 11.8438V12C6.25 13.525 6.8558 14.9875 7.93414 16.0659C9.01247 17.1442 10.475 17.75 12 17.75C13.525 17.75 14.9875 17.1442 16.0659 16.0659C17.1442 14.9875 17.75 13.525 17.75 12V11.8438C17.75 11.2915 18.1977 10.8438 18.75 10.8438H19.25C19.8023 10.8438 20.25 11.2915 20.25 11.8437V12C20.25 14.188 19.3808 16.2865 17.8336 17.8336C16.5842 19.0831 14.9753 19.8903 13.25 20.1548V22C13.25 22.5523 12.8023 23 12.25 23H11.75C11.1977 23 10.75 22.5523 10.75 22V20.1548C9.02471 19.8903 7.41579 19.0831 6.16637 17.8336C4.61919 16.2865 3.75 14.188 3.75 12V11.8438C3.75 11.2915 4.19772 10.8438 4.75 10.8438H5.25C5.80228 10.8438 6.25 11.2915 6.25 11.8438Z"
+                    fill="#b7b7b7"></path>
+                </g>
+              </svg></a>
+          </section>
+        </div>
+        <div id="friend" class="bg-gray-dc-server pt-21 h-full w-full flex flex-col md:flex-col md:min-w-90">
+          <div id="friendnav" class="bg-gray-dc-server border-b-2 nav-border h-10 w-full flex flex-row y">
+            <div id="Friendsz" class="px-5 flex items-center border-r-2" style="border-color:#3e4047">
+              <svg fill="#949ba4" width="50" height="50" viewBox="-9.6 -9.6 51.20 51.20"
+                xmlns="http://www.w3.org/2000/svg" stroke="#949ba4" stroke-width="0.00032">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"
+                  transform="translate(5.279999999999999,5.279999999999999), scale(0.67)"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
+                  stroke-width="0.192"></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z">
+                  </path>
+                </g>
+              </svg>
+              <span class="font-semibold relative top-2 dm-font pb-4 text-left ml-0" style="color:white;">Friends</span>
+            </div>
+            <button onclick="document.getElementById('Changar').innerHTML = 'ONLINE - 6';" id="Online"
+              class=" friendnavbtncolor mx-2 my-1.5 rounded-md">Online</button>
+            <button onclick="document.getElementById('Changar').innerHTML = 'ALL FRIENDS - 6';" id="All"
+              class=" friendnavbtncolor mx-2 my-1.5 rounded-md">All</button>
+            <button id="Pending" class=" friendnavbtncolor mx-2 my-1.5 rounded-md">Pending</button>
+            <button id="Blocked" class=" friendnavbtncolor mx-2 my-1.5 rounded-md">Blocked</button>
+            <button id="AddFriend"
+              class=" cursor-not-allowed friendnavbtncolor mx-2  my-1.5 rounded-md !bg-green-600 !text-white">Add
+              Friend</button>
+          </div>
+          <div id="friendlist" class="flex flex-col w-full h-full px-5">
+            <!--  md:w-3/4 [oh]-->
+            <span id="Changar" class="!h-6 w-28 mt-6 mb-6 dm-font text-left pt-2 ml-5 !text-white flex-1">ONLINE -
+              6</span>
+            <div class=" w-full h-full flex-2 rounded-lg flex flex-col md:flex-col">
+              <button class="friendobject flex items-center">
+                <div class="mr-2">
+                  <img id="f1"
+                    src="https://cdn.discordapp.com/avatars/901404605336916018/0401a2b9880eb78e23baa5f846bde122.png?size=1024"
+                    alt="" class="rounded-full w-8 h-8">
+                </div>
+                <span class="user relative bottom-3 !text-white dm-font ml-3">Izaxel</span><span id="tags"
+                  class="!text-slate-400 sm-font" style="margin-bottom: 27px;">#7452</span>
+                <span class="status !text-gray-400 sm-font top-5 absolute ml-14">Watching the guy staring at my
+                  introduction template </span>
+                <a href=""
+                  class="btn-fren-lead cursor-not-allowed h-8 w-8 rounded-full absolute right-4 items-center justify-center mx-2 flex"
+                  style="background-color: #2b2d31;"><svg class="relative" width="84px" height="84px"
+                    viewBox="-5 0 35 25" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <g id="Interface / Link_Horizontal_Off">
+                        <path id="Vector"
+                          d="M8 12H12M12 12L8 8M12 12L20 20M15 8H17C19.2091 8 21 9.79086 21 12C21 13.1947 20.4759 14.2671 19.6455 15M9 16H7C4.79086 16 3 14.2091 3 12C3 9.79086 4.79086 8 7 8H8M8 8L4 4"
+                          stroke="#eb2d2d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </g>
+                    </g>
+                  </svg></a>
+              </button>
+              <button class="friendobject flex items-center">
+                <div class="mr-2 statuz">
+                  <img
+                    src="https://cdn.discordapp.com/avatars/916151034018144306/98310d7b8baba0cd2cac88bd8e6ec9b0.png?size=1024"
+                    alt="" class="Statusrounded rounded-full w-8 h-8">
+                </div>
+                <span class="user  relative bottom-3 !text-white dm-font ml-3">seele/veliona</span><span id="tags"
+                  class="!text-slate-400 sm-font" style="margin-bottom: 27px;">#9999</span>
+                <span class="status !text-gray-400 sm-font top-5 absolute ml-14">dont click me... im too dumb to be
+                  clicked...</span>
+                <!-- <svg width="64px" height="64px" viewBox="-24 -24 72.00 72.00" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Interface / Link_Horizontal"> <path id="Vector" d="M8 12H16M15 8H17C19.2091 8 21 9.79086 21 12C21 14.2091 19.2091 16 17 16H15M9 8H7C4.79086 8 3 9.79086 3 12C3 14.2091 4.79086 16 7 16H9" stroke="#2ca53a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>-->
+                <a href="https://rhi-has-no-life.carrd.co/"
+                  class="btn-fren-lead cursor-pointer h-8 w-8 rounded-full absolute right-4 items-center justify-center mx-2 flex"
+                  style="background-color: #2b2d31;"><svg class="relative" width="84px" height="84px"
+                    viewBox="-5 0 35 25" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <g id="Interface / Link_Horizontal">
+                        <path id="Vector"
+                          d="M8 12H16M15 8H17C19.2091 8 21 9.79086 21 12C21 14.2091 19.2091 16 17 16H15M9 8H7C4.79086 8 3 9.79086 3 12C3 14.2091 4.79086 16 7 16H9"
+                          stroke="#2ca53a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </g>
+                    </g>
+                  </svg></a>
+              </button>
+              <button class="friendobject flex items-center">
+                <div class="mr-2">
+                  <img id="f1"
+                    src="https://cdn.discordapp.com/avatars/976407720880140318/e81e274850abd511687c80933beed321.png?size=1024"
+                    alt="" class="rounded-full w-8 h-8">
+                </div>
+                <span class="user  relative bottom-3 !text-white dm-font ml-3">iwkms</span><span id="tags"
+                  class="!text-slate-400 sm-font" style="margin-bottom: 27px;">#0021</span>
+                <span class="status !text-gray-400 sm-font top-5 absolute ml-14">Hi! Click the Green button right there
+                  to lead to my profile</span>
+                <a href="https://vieny.carrd.co/"
+                  class="btn-fren-lead cursor-pointer h-8 w-8 rounded-full absolute right-4 items-center justify-center mx-2 flex"
+                  style="background-color: #2b2d31;"><svg class="relative" width="84px" height="84px"
+                    viewBox="-5 0 35 25" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <g id="Interface / Link_Horizontal">
+                        <path id="Vector"
+                          d="M8 12H16M15 8H17C19.2091 8 21 9.79086 21 12C21 14.2091 19.2091 16 17 16H15M9 8H7C4.79086 8 3 9.79086 3 12C3 14.2091 4.79086 16 7 16H9"
+                          stroke="#2ca53a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </g>
+                    </g>
+                  </svg></a>
+              </button>
+              <button class="friendobject flex items-center">
+                <div class="mr-2">
+                  <img id="f1"
+                    src="https://cdn.discordapp.com/avatars/258741301271461890/0674ad45aa828a5b4d52fa8c63153ba5.png?size=1024"
+                    alt="" class="rounded-full w-8 h-8">
+                </div>
+                <span class="user  relative bottom-3 !text-white dm-font ml-3">NicoDM</span><span id="tags"
+                  class="!text-slate-400 sm-font" style="margin-bottom: 27px;">#3788</span>
+                <span class="status !text-gray-400 sm-font top-5 absolute ml-14">Hi! Click the Green button right there
+                  to lead to my profile</span>
+                <a href="https://nicodm.carrd.co/"
+                  class="btn-fren-lead cursor-pointer h-8 w-8 rounded-full absolute right-4 items-center justify-center mx-2 flex"
+                  style="background-color: #2b2d31;"><svg class="relative" width="84px" height="84px"
+                    viewBox="-5 0 35 25" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <g id="Interface / Link_Horizontal">
+                        <path id="Vector"
+                          d="M8 12H16M15 8H17C19.2091 8 21 9.79086 21 12C21 14.2091 19.2091 16 17 16H15M9 8H7C4.79086 8 3 9.79086 3 12C3 14.2091 4.79086 16 7 16H9"
+                          stroke="#2ca53a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </g>
+                    </g>
+                  </svg></a>
+              </button>
+              <button class="friendobject flex items-center">
+                <div class="mr-2">
+                  <img id="f1"
+                    src="https://cdn.discordapp.com/avatars/724409231809314927/e8c460c9a0f0c8191b2c83c5d9e1dff9.png?size=1024"
+                    alt="" class="rounded-full w-8 h-8">
+                </div>
+                <span class="user  relative bottom-3 !text-white dm-font ml-3">KAESISCOOL</span><span id="tags"
+                  class="!text-slate-400 sm-font" style="margin-bottom: 27px;">#6421</span>
+                <span class="status !text-gray-400 sm-font top-5 absolute ml-14">Hi! Click the Green button right there
+                  to lead to my profile</span>
+                <a href="https://en.pronouns.page/@KAESISCOOL'"
+                  class="btn-fren-lead cursor-pointer h-8 w-8 rounded-full absolute right-4 items-center justify-center mx-2 flex"
+                  style="background-color: #2b2d31;"><svg class="relative" width="84px" height="84px"
+                    viewBox="-5 0 35 25" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <g id="Interface / Link_Horizontal">
+                        <path id="Vector"
+                          d="M8 12H16M15 8H17C19.2091 8 21 9.79086 21 12C21 14.2091 19.2091 16 17 16H15M9 8H7C4.79086 8 3 9.79086 3 12C3 14.2091 4.79086 16 7 16H9"
+                          stroke="#2ca53a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </g>
+                    </g>
+                  </svg></a>
+              </button>
+              <button class="friendobject flex items-center">
+                <div class="mr-2">
+                  <img id="f1"
+                    src="https://cdn.discordapp.com/avatars/803387341472661546/fcff03179c5ff0b7eccda4469e0da337.png?size=1024"
+                    alt="" class="rounded-full w-8 h-8">
+                </div>
+                <span class="user  relative bottom-3 !text-white dm-font ml-3">Rinychan</span><span id="tags"
+                  class="!text-slate-400 sm-font" style="margin-bottom: 27px;">#0774</span>
+                <span class="status !text-gray-400 sm-font top-5 absolute ml-14">Hi! Click the Green button right there
+                  to lead to my profile</span>
+                <a href='https://cookienom.carrd.co/'
+                  class="btn-fren-lead cursor-pointer h-8 w-8 rounded-full absolute right-4 items-center justify-center mx-2 flex"
+                  style="background-color: #2b2d31;"><svg class="relative" width="84px" height="84px"
+                    viewBox="-5 0 35 25" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <g id="Interface / Link_Horizontal">
+                        <path id="Vector"
+                          d="M8 12H16M15 8H17C19.2091 8 21 9.79086 21 12C21 14.2091 19.2091 16 17 16H15M9 8H7C4.79086 8 3 9.79086 3 12C3 14.2091 4.79086 16 7 16H9"
+                          stroke="#2ca53a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </g>
+                    </g>
+                  </svg></a>
+              </button>
+              <!-- For this one, use class. I won't add stupid classes when I can just put one.-->
+            </div>
+          </div>
+        </div>
+      </div>
 
-            <!-- PORTAL #div-where-you-put-chat-and-friend -->
-            <div id="configuration" class="bg-gray-dc-server fixed inset-0 z-50 flex justify-center items-center">
-              <div class="bg-gray-dc-serverp-0 w-full h-full flex">
-                <div class="inline-block h-full w-[300px]">
-                  <div class="bg-gray-dc-dmlist h-full w-full justify-end">
-                    <div class="w-full flex flex-col h-full flex-start align-items items-center overflow-y-scroll" id="btns-config">
-                      <h3 class="text-white font-bold text-gray-500">CONFIGURATION</h3>
-                      <button class="btn-config text-white font-bold py-2 px-4 w-5/6 rounded mx-3">
-                        Website Information
-                      </button>
-                      <button class="EXIT btn-config-quit text-red-600 font-bold py-2 px-4 w-5/6 rounded mx-3">
-                        Exit
-                      </button>
+
+      <!-- PORTAL #div-where-you-put-chat-and-friend-->
+      <div id="&portal(.div-where-you-put-chat-and-friend)"
+        class="flex-1 flex overflow-hidden bg-gray-800 pt-21 min-w-90 h-full w-full flex">
+        <div id="channel-nav" class="pt-21 min-w-90 h-full w-full basis-0 flex flex-col">
+          <div id="channel-list" class="bg-gray-dc-dmlist pt-21 min-w-90 h-full w-44">
+            <div id="server-title" class="flex flex-col d-flex w-full h-36">
+              <!-- [For gradient please use normal CSS. this tailwind are hard to read some point]-->
+              <span class="px-2 text-white my-4" style="font-weight: 600;">My Portofolio :D</span>
+            </div>
+            <div class="channels">
+              <button class="channel w-11/12 h-8 mx-2 my-px rounded-md px-2 bg-[#000000000] hover:bg-[#4a4a4a38] py-0"
+                style="display:inline-flex;justify-content: flex-start;">
+                <svg class=" mt-[10px] mr-[5px]" style="display:inline-flex;" viewBox="0 0 20 20" height="20px"
+                  width="20px" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path d="M13 21L17 3" stroke="#808483" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+                    <path d="M7 21L11 3" stroke="#808483" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+                    <path d="M20 9L4 9" stroke="#808483" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+                    <path d="M4 15L20 15" stroke="#808483" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+                  </g>
+                </svg>
+                <span class="mt-[6px] dm-font" style="color:#808483;">WhoAmI</span>
+              </button>
+              <button class="channel w-11/12 h-8 mx-2 my-px rounded-md px-2 bg-[#000000000] hover:bg-[#4a4a4a38] py-0"
+                style="display:inline-flex;justify-content: flex-start;">
+                <svg class=" mt-[10px] mr-[5px]" style="display:inline-flex;" viewBox="0 0 24 24" height="18px"
+                  width="18px" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M5.5 10V7C5.5 5.27609 6.18482 3.62279 7.40381 2.40381C8.62279 1.18482 10.2761 0.5 12 0.5C13.7239 0.5 15.3772 1.18482 16.5962 2.40381C17.8152 3.62279 18.5 5.27609 18.5 7V10H19C20.6569 10 22 11.3431 22 13V20C22 21.6569 20.6569 23 19 23H5C3.34315 23 2 21.6569 2 20V13C2 11.3431 3.34315 10 5 10H5.5ZM9.52513 4.52513C10.1815 3.86875 11.0717 3.5 12 3.5C12.9283 3.5 13.8185 3.86875 14.4749 4.52513C15.1313 5.1815 15.5 6.07174 15.5 7V10H8.5V7C8.5 6.07174 8.86875 5.1815 9.52513 4.52513Z"
+                      fill="#808483"></path>
+                  </g>
+                </svg>
+                <span class="mt-[6px] dm-font" style="color:#808483;">Credit</span>
+              </button>
+            </div>
+          </div>
+          <section class="w-full h-12 flex items-center tag-parent" style="background-color: #232428;">
+            <div class="mr-2">
+              <img id="f1" src="https://i.pinimg.com/736x/fa/fc/e1/fafce1b9206d2eaf31e2193808addde7.jpg" alt=""
+                class="rounded-full w-8 h-8 my-2 mx-3">
+            </div>
+            <span id="tag-randomizer" class="user relative !text-white dm-font ml-1 text-xs">guest#0152</span>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D"
+              class="mic-btn cursor-pointer h-8 w-8 rounded-sl relative items-center justify-center mx-2 flex ml-[10px]"
+              style="background-color: #2b2d31;"><svg class="relative" width="84px" height="24px" viewBox="-5 0 35 25"
+                fill="#b7b7b7" xmlns="http://www.w3.org/2000/svg" stroke="#000000">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    d="M8 5C8 2.79086 9.79086 1 12 1C14.2091 1 16 2.79086 16 5V12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12V5Z"
+                    fill="#b7b7b7"></path>
+                  <path
+                    d="M6.25 11.8438V12C6.25 13.525 6.8558 14.9875 7.93414 16.0659C9.01247 17.1442 10.475 17.75 12 17.75C13.525 17.75 14.9875 17.1442 16.0659 16.0659C17.1442 14.9875 17.75 13.525 17.75 12V11.8438C17.75 11.2915 18.1977 10.8438 18.75 10.8438H19.25C19.8023 10.8438 20.25 11.2915 20.25 11.8437V12C20.25 14.188 19.3808 16.2865 17.8336 17.8336C16.5842 19.0831 14.9753 19.8903 13.25 20.1548V22C13.25 22.5523 12.8023 23 12.25 23H11.75C11.1977 23 10.75 22.5523 10.75 22V20.1548C9.02471 19.8903 7.41579 19.0831 6.16637 17.8336C4.61919 16.2865 3.75 14.188 3.75 12V11.8438C3.75 11.2915 4.19772 10.8438 4.75 10.8438H5.25C5.80228 10.8438 6.25 11.2915 6.25 11.8438Z"
+                    fill="#b7b7b7"></path>
+                </g>
+              </svg></a>
+          </section>
+        </div>
+        <div id="navigator"
+          class="z-3 bg-[#313338] fixed border-b-1 border-b-black-25 w-full h-[60px] z-0 ml-[221px] fixed"
+          style="border-bottom-width: 1px;border-bottom-color: #00000029;">
+          <div class="flex">
+            <div id="channel-name" class="flex m-[8px]">
+              <svg class=" mt-[10px] mr-[5px] inline-flex" viewBox="0 0 24 24" height="30px" width="30px" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path d="M13 21L17 3" stroke="#808483" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M7 21L11 3" stroke="#808483" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M20 9L4 9" stroke="#808483" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M4 15L20 15" stroke="#808483" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                </g>
+              </svg>
+              <span class="relative !text-white text-xs dm-font ml-1 mt-[15px]">WhoAmI</span>
+            </div>
+          </div>
+        </div>
+        <div id="chat"
+          class="flex-1 flex flex-col-reverse bg-gray-dc-server h-full w-screen flex flex-col md:flex-col md:min-w-90 justify-end">
+          <div id="chat-place" class=" overflow-y-auto flex-1 flex flex-col overflow-y-scroll scroll-smooth">
+            <div class="message flex flex-col mx-2">
+              <div class="flex visible z-2 mt-20">
+                <img class=" w-[45px] h-[45px] rounded-full mr-[10px]"
+                  src="https://cdn.discordapp.com/avatars/901404605336916018/0401a2b9880eb78e23baa5f846bde122.png?size=1024"
+                  alt="avatar" class="rounded-full">
+                <div>
+                  <h3 class="text-orange-400 font-semibold">Izaxel</h3>
+                  <span class="text-gray-400 text-sm">12:34 PM</span>
+                </div>
+              </div>
+              <div class="chatz -mt-1 ml-10 rounded-lg">
+                <p class="text-white">Below embed is all my introduction! :D</p>
+                <div class="embed border-l-8 flex-1 bg-gray-dc-dmlist w-11/12 rounded-md m-4">
+                  <div class="embed-title text-white font-semibold pl-[20px] py-[10px]">
+                    About me
+                  </div>
+                  <div class="embed-content text-white pl-[20px] py-[10px]">
+                    <ul class="list-disc ml-3">
+                      <li>Name (IRL) : Jordan</li>
+                      <li> Name (Online) : [Luci4, Azazel/Azazil, Izaxel/Iza, Arzon, Arson, Jordan, Forensic, Oblivion,
+                        Axon, Azre]</li>
+                      <li>Grade : 1st Grade High School</li>
+                      <li> Age : 15 Years old</li>
+                      <li>Birthday : 3 March</li>
+                      <li>Pronouns : He/Him</li>
+                      <li>Location : Earth, Southeast Asia, Indonesia</li>
+                      <li>Mental Disorders : None. Cuz I'm better than yall suckerz</li>
+                      <li>Hobby : Programming, Reading, Debating, Studying (Psychology/Philosophy/Mathematics), Helping
+                        people issue (Homework/Mental Issue), Scrolling on Social Media, Talking with people
+                        (IRL/Online)</li>
+                      <li>Ambition : Attorney, Astronout, Philosopher, Psychologist, Neurologist, Spy, Mathematician
+                      </li>
+                      <li>MBTI : INFP (Mix of INTP)</li>
+                      <li>Sexuality : Straight</li>
+                      <li>Passion : Being rich, Make a better world for everyone, Travel to mars XD</li>
+                      <li>Additional : I have Ligyrophobia, and Anger issue. I'm also a Logic/Emotional Person, A
+                        Daydreamer :]</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="embed1 border-x-violet-600 border-l-8 flex-1 bg-gray-dc-dmlist w-11/12 rounded-md  m-4">
+                  <div class="embed-title text-white font-semibold pl-[20px] py-[10px]">
+                    Do Not Interact Criteria
+                  </div>
+                  <div class="embed-content text-white pl-[20px] py-[10px]">
+                    <ul class="list-disc ml-3">
+                      <li class="font-semibold mb-5">I don't have any DNI Criteria. I don't judge people for who they
+                        are, whether they're into some pretty weird stuff, scared of others who are different, or have
+                        strong opinions on race, religion, or anything else. I understand that everyone's different and
+                        has their own viewpoints and choices that make up the world we live in, so I try my best to
+                        accept all kinds of thoughts and ways of life. Which mean, anyone can be my friend!</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="embed2 border-x-red-600 border-l-8 flex-1 bg-gray-dc-dmlist w-11/12 rounded-md  m-4">
+                  <div class="embed-title text-white font-semibold pl-[20px] py-[10px]">
+                    Before you Follow
+                  </div>
+                  <div class="embed-content text-white pl-[20px] py-[10px]">
+                    <ul class="list-disc ml-3">
+                      <li>I love posting dark humour, and frequently ignoring the environment. (Also main reason why I
+                        tend to get ban on most servers).</li>
+                      <li>I tend to be late to DM your message.</li>
+                      <li>I tend to be Deceptionist most of the time.</li>
+                      <li>I tend to wait someone to DM me, rather than I DM You.</li>
+                      <li>I am a fast typer.</li>
+                      <li>I have wittyass grammar.</li>
+                      <li>I tend to use slang words.</li>
+                      <li>I tend to be Formal.</li>
+                      <li>I tend to dox people identity online and sharing it Online. If only, You are messing with me.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="embed2 border-x-yellow-600 border-l-8 flex-1 bg-gray-dc-dmlist w-11/12 rounded-md  m-4">
+                  <div class="embed-title text-white font-semibold pl-[20px] py-[10px]">
+                    Things I Like
+                  </div>
+                  <div class="embed-content text-white pl-[20px] py-[10px]">
+                    <ul class="list-disc ml-3">
+                      <li>Computer</li>
+                      <li>You</li>
+                      <li>Coffee</li>
+                      <li>Badminton</li>
+                      <li>Mathematics</li>
+                      <li>Psychology</li>
+                      <li>Philosophy</li>
+                      <li>Politics</li>
+                      <li>Law</li>
+                      <li>Astronomy</li>
+                      <li>Memes</li>
+                      <li>My Besties</li>
+                      <li>Listening to Music</li>
+                      <li>Desert foods</li>
+                      <li>Red, Black, Orange, and Blue colors</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="embed2 border-x-green-600 border-l-8 flex-1 bg-gray-dc-dmlist w-11/12 rounded-md  m-4">
+                  <div class="embed-title text-white font-semibold pl-[20px] py-[10px]">
+                    Things I Dislike
+                  </div>
+                  <div class="embed-content text-white pl-[20px] py-[10px]">
+                    <ul class="list-disc ml-3">
+                      <li>Centipede</li>
+                      <li>My PC for some reason</li>
+                      <li>When my coffee is out of stock</li>
+                      <li>My Entrepreneurship teacher *bitch got so hatred that I list her in my introduction template*
+                      </li>
+                      <li>My Anger issue</li>
+                      <li>Hectic place</li>
+                      <li>School</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="embed2 border-x-yellow-200 border-l-8 flex-1 bg-gray-dc-dmlist w-11/12 rounded-md  m-4">
+                  <div class="embed-title text-sky-300 font-semibold pl-[20px] py-[10px]">
+                    My Project
+                  </div>
+                  <div class="embed-content text-white pl-[20px] py-[10px]">
+                    <div id="socmed" class="flex h-full w-full flex-col justify-center">
+                      I've made so many Projects before, from Python, to JS. But due to my Github account's password
+                      that I'm *sorry* FORGOT. I had to make a new Github, and There's only plenty project I've made. I
+                      will add more in the future!
+                      <br />
+                      <a href="https://f0r4l3.github.io/quote-generator/"
+                        class="text-center btn-socmed text-white font-bold py-2 px-4 w-1/3 rounded mx-3 my-2 bg-gray-400 hover:bg-gray-500 active:bg-gray-600">
+                        IzaQuoteGenerator
+                      </a>
                     </div>
                   </div>
                 </div>
-                <div class="inline-block w-full h-full">
-                  <div class="inline-block w-11/12 h-5/6 mx-6 my-8 rounded-2xl flex flex-col">
-                    <div style="background:url('https://images.hdqwalls.com/download/space-art-planet-4k-59-3840x2160.jpg');background-size: cover;" class="w-full h-[20%] rounded-t-2xl"></div>
-                    <div class="w-full h-[80%] rounded-b-2xl bg-[#1e1f22]">
-                      <div class="w-full flex flex-col h-full flex-start align-items items-center overflow-y-hidden">
-                        <button class="btn-config text-white font-bold py-2 px-4 w-5/6 rounded m-6 text-2xl">
-                          MADE USING <span class="btn-config !text-sky-500 font-bold rounded text-2xl">TAILWINDCSS</span>
-                        </button>
-                        <button class="btn-config text-white font-bold py-2 px-4 w-5/6 rounded m-2 text-2xl">
-                          MADE USING <span class="btn-config !text-sky-900 font-bold rounded text-2xl">JQuerry</span>
-                        </button>
-                        <div id="todo"class="bg-transparent rounded-lg shadow-md p-6 w-full overflow-y-scroll">
-                          <h2 class="text-2xl font-bold mb-6 text-sky-500">Actually this webpage is not done yet, there's still exist many bugs, that exist. And many features that is not added yet. So yeah, here's the TODO List</h2>
-                          <ul class="list-disc pl-6"></ul>
-                            <li class="mb-2 text-sky-500"><input type="checkbox" class="mr-2">Some font have regular font-family. Change it.</li>
-                            <li class="mb-2 text-sky-500"><input type="checkbox" class="mr-2" checked>Add a reactive DOM. And for a div, please on the class add the prefix "&", as a indicator. </li>
-                            <li class="mb-2 text-sky-500"><input type="checkbox" class="mr-2">Make this website capable of fetching via Discord API, such Fetching Discord Profile, Description. (OPTIONAL)</li>
-                            <li class="mb-2 text-sky-500"><input type="checkbox" class="mr-2" checked>Make the webpage stable at different zoom level.</li>
-                            <li class="mb-2 text-sky-500"><input type="checkbox" class="mr-2">Make the webpage available for any devices (PC, laptop, Phone, Tablet)</li>
-                            <li class="mb-2 text-sky-500"><input type="checkbox" class="mr-2" checked>Add Website credit, information</li>
-                            <li class="mb-2 text-sky-500"><input type="checkbox" class="mr-2" checked>Add Different status at friend list</li>
-                          </ul>
-                        </div>
-                      </div>
+                <div class="embed2 border-x-orange-200 border-l-8 flex-1 bg-gray-dc-dmlist w-11/12 rounded-md  m-4">
+                  <div class="embed-title text-violet-300 font-semibold pl-[20px] py-[10px]">
+                    My Skillz
+                  </div>
+                  <div class="embed-content text-white pl-[20px] py-[10px]">
+                    <div id="socmed" class="flex h-full w-full flex-col justify-center">
+                      <span class="text-blue-600 font-semibold">Py<span
+                          class="text-yellow-400 font-semibold">Thon</span></span>
+                      <p>I've capable of using Request.py, Discord.py, os.py, system.py, and making Algorithms</p>
+                      <span class="text-sky-600 font-semibold">Web <span
+                          class="text-sky-400 font-semibold">Development</span></span>
+                      <p>I've capable of using React.js, Querry.js, Tailwind CSS, and applying Discord.js</p>
+                      <p class="text-red-500">And that is the main reason why you shold not hire me</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="embed2 border-x-sky-200 border-l-8 flex-1 bg-gray-dc-dmlist w-11/12 rounded-md  m-4">
+                  <div class="embed-title text-white font-semibold pl-[20px] py-[10px]">
+                    My Social Media,<span class="text-red-500 font-semibold pl-[4px] py-[10px]">Also, I'm a Multi
+                      Accounter lol</span>
+                  </div>
+                  <div class="embed-content text-white pl-[20px] py-[10px]">
+                    <div id="socmed" class="flex h-full w-full flex-col justify-center">
+                      <a href="https://twitter.com/BLAlgorithm"
+                        class="text-center btn-socmed text-white font-bold py-2 px-4 w-1/3 rounded mx-3 my-2 bg-sky-400 hover:bg-sky-500 active:bg-sky-600">
+                        Twitter
+                      </a>
+                      <a href="https://pin.it/8XR2iti"
+                        class="text-center btn-socmed text-white font-bold py-2 px-4 w-1/3 rounded mx-3 my-2 bg-red-700 hover:bg-red-800 active:bg-red-900">
+                        Pinterest
+                      </a>
+                      <a href="https://www.roblox.com/users/2909745662/profile"
+                        class="text-center btn-socmed text-white font-bold py-2 px-4 w-1/3 rounded mx-3 my-2 bg-gray-700 hover:bg-gray-800 active:bg-gray-900">
+                        Roblox
+                      </a>
+                      <a href="https://www.roblox.com/users/443293364/profile"
+                        class="text-center btn-socmed text-white font-bold py-2 px-4 w-1/3 rounded mx-3 my-2 bg-gray-700 hover:bg-gray-800 active:bg-gray-900">
+                        Roblox 2
+                      </a>
+                      <a href="https://discord.com/users/901404605336916018"
+                        class="text-center btn-socmed text-white font-bold py-2 px-4 w-1/3 rounded mx-3 my-2 bg-blue-400 hover:bg-blue-500 active:bg-blue-600">
+                        Discord
+                      </a>
+                      <a href="https://www.instagram.com/crypto_cotangent/"
+                        class="text-center btn-socmed text-white font-bold py-2 px-4 w-1/3 rounded mx-3 my-2 bg-blue-400 hover:bg-blue-500 active:bg-blue-600">
+                        Instagram
+                      </a>
+                      <a href="https://www.facebook.com/profile.php?id=100076977514235"
+                        class="text-center btn-socmed text-white font-bold py-2 px-4 w-1/3 rounded mx-3 my-2 bg-blue-600 hover:bg-blue-700 active:bg-blue-800">
+                        Facebook
+                      </a>
+                      <a href="https://open.spotify.com/user/31fhrkk5msaij5k3rjcjtrcxwej4"
+                        class="text-center btn-socmed text-white font-bold py-2 px-4 w-1/3 rounded mx-3 my-2 bg-green-400 hover:bg-green-500 active:bg-green-600">
+                        Spotify
+                      </a>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+          <input id="kumiwa" type="search" name="chat"
+            class="px-4 py-2 m-2 bg-[#383a40] border border-gray-700 rounded-full placeholder-black-900 focus:outline-none focus:ring focus:ring-indigo-500 focus:border-indigo-500 text-white"
+            value="">
         </div>
-    </div>      
+        <div id="members" class="w-64 min-w-0 flex-shrink-0 bg-[#2b2d31] h-full w-[300px]">
+          <div id="online" class="mt-[35%] ml-4 text-gray-400 font-semibold">ONLINE - 1</div>
+          <div id="userinmembers" class="w-[95%] h-10 mx-2 rounded-lg flex items-center">
+            <div class="m-2 rounded-full"
+              style="box-shadow: 0 0 0px 1px #313338, 0 0 0px 3px #27a14a, 0 0 2px 3px #27a14a;">
+              <img
+                src="https://cdn.discordapp.com/avatars/901404605336916018/0401a2b9880eb78e23baa5f846bde122.png?size=1024"
+                alt="" class="Statusrounded rounded-full w-8 h-8">
+            </div>
+            <span class="user bottom-3 !text-orange-400 ml-3">Izaxel</span>
+          </div>
+          <div id="userinmembers" class="w-[95%] h-10 mx-2 rounded-lg flex items-center">
+            <div class="m-2 rounded-full"
+              style="box-shadow: 0 0 0px 1px #313338, 0 0 0px 3px #27a14a, 0 0 2px 3px #27a14a;">
+              <img src="https://i.pinimg.com/736x/fa/fc/e1/fafce1b9206d2eaf31e2193808addde7.jpg" alt=""
+                class="Statusrounded rounded-full w-8 h-8">
+            </div>
+            <span class="user bottom-3 !text-orange-400 ml-3">guest</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PORTAL #div-where-you-put-chat-and-friend -->
+      <div id="configuration" class="bg-gray-dc-server fixed inset-0 z-50 flex justify-center items-center">
+        <div class="bg-gray-dc-serverp-0 w-full h-full flex">
+          <div class="inline-block h-full w-[300px]">
+            <div class="bg-gray-dc-dmlist h-full w-full justify-end">
+              <div class="w-full flex flex-col h-full flex-start align-items items-center overflow-y-scroll"
+                id="btns-config">
+                <h3 class="text-white font-bold text-gray-500">CONFIGURATION</h3>
+                <button class="btn-config text-white font-bold py-2 px-4 w-5/6 rounded mx-3">
+                  Website Information
+                </button>
+                <button class="EXIT btn-config-quit text-red-600 font-bold py-2 px-4 w-5/6 rounded mx-3">
+                  Exit
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="inline-block w-full h-full">
+            <div class="inline-block w-11/12 h-5/6 mx-6 my-8 rounded-2xl flex flex-col">
+              <div
+                style="background:url('https://images.hdqwalls.com/download/space-art-planet-4k-59-3840x2160.jpg');background-size: cover;"
+                class="w-full h-[20%] rounded-t-2xl"></div>
+              <div class="w-full h-[80%] rounded-b-2xl bg-[#1e1f22]">
+                <div class="w-full flex flex-col h-full flex-start align-items items-center overflow-y-hidden">
+                  <button class="btn-config text-white font-bold py-2 px-4 w-5/6 rounded m-6 text-2xl">
+                    MADE USING <span class="btn-config !text-sky-500 font-bold rounded text-2xl">TAILWINDCSS</span>
+                  </button>
+                  <button class="btn-config text-white font-bold py-2 px-4 w-5/6 rounded m-2 text-2xl">
+                    MADE USING <span class="btn-config !text-sky-900 font-bold rounded text-2xl">JQuerry</span>
+                  </button>
+                  <div id="todo" class="bg-transparent rounded-lg shadow-md p-6 w-full overflow-y-scroll">
+                    <h2 class="text-2xl font-bold mb-6 text-sky-500">Actually this webpage is not done yet, there's
+                      still exist many bugs, that exist. And many features that is not added yet. So yeah, here's the
+                      TODO List</h2>
+                    <ul class="list-disc pl-6"></ul>
+                    <li class="mb-2 text-sky-500"><input type="checkbox" class="mr-2">Some font have regular
+                      font-family. Change it.</li>
+                    <li class="mb-2 text-sky-500"><input type="checkbox" class="mr-2" checked>Add a reactive DOM. And
+                      for a div, please on the class add the prefix "&", as a indicator. </li>
+                    <li class="mb-2 text-sky-500"><input type="checkbox" class="mr-2">Make this website capable of
+                      fetching via Discord API, such Fetching Discord Profile, Description. (OPTIONAL)</li>
+                    <li class="mb-2 text-sky-500"><input type="checkbox" class="mr-2" checked>Make the webpage stable at
+                      different zoom level.</li>
+                    <li class="mb-2 text-sky-500"><input type="checkbox" class="mr-2">Make the webpage available for any
+                      devices (PC, laptop, Phone, Tablet)</li>
+                    <li class="mb-2 text-sky-500"><input type="checkbox" class="mr-2" checked>Add Website credit,
+                      information</li>
+                    <li class="mb-2 text-sky-500"><input type="checkbox" class="mr-2" checked>Add Different status at
+                      friend list</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 <style>
-/* For animation please put it on a normal CSS Stylesheet... Do no put it on Tailwind classes. */
-@media only screen and (max-width: 240px) {
-  #friendnav {
-    flex-wrap: wrap;
+  /* For animation please put it on a normal CSS Stylesheet... Do no put it on Tailwind classes. */
+  @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300&family=Montserrat:wght@500&family=Work+Sans&display=swap');
+
+  * {
+    font-family: 'Kanit', sans-serif;
+    font-family: 'Exo 2', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-family: 'Work Sans', sans-serif;
+
   }
-  #Friendsz {
-    margin-right: 0;
+
+  @media only screen and (max-width: 240px) {
+    #friendnav {
+      flex-wrap: wrap;
+    }
+
+    #Friendsz {
+      margin-right: 0;
+    }
+
+    button {
+      flex-grow: 1;
+      margin-right: 0;
+      margin-bottom: 5px;
+    }
   }
-  button {
-    flex-grow: 1;
-    margin-right: 0;
-    margin-bottom: 5px;
-  }
-}
 
-#configuration {
-  display: none;
-}
-
-#loading-overlay {
-  transition: opacity 0.3s ease-out;
-}
-
-#loading-overlay.hidden {
-  opacity: 0;
-}
-
-/* For Webkit browsers */
-#todo::-webkit-scrollbar {
-  width: 6px;
-}
-
-#todo::-webkit-scrollbar-thumb {
-  background-color: #00b3ff;
-}
-
-#todo::-webkit-scrollbar-track {
-  background-color: #292929;
-}
-
-#chat-place::-webkit-scrollbar {
-  width: 2px;
-}
-
-#chat-place::-webkit-scrollbar-thumb {
-  background-color: #4a4a4a;
-}
-
-#chat-place::-webkit-scrollbar-track {
-  background-color: #292929;
-}
-
-#userinmembers:hover {
-  background-color: #4c4c4c3d;
-}
-
-#tags {
+  #configuration {
     display: none;
-}
+  }
 
-#btns-config::-webkit-scrollbar {
-  width: 6px;
-}
+  #loading-overlay {
+    transition: opacity 0.3s ease-out;
+  }
 
-#btns-config::-webkit-scrollbar-thumb {
-  background-color: #2b2b2b;
-}
+  #loading-overlay.hidden {
+    opacity: 0;
+  }
 
-#btns-config::-webkit-scrollbar-track {
-  background-color: #292929;
-}
+  /* For Webkit browsers */
+  #todo::-webkit-scrollbar {
+    width: 6px;
+  }
 
-.btn-config {
-  color: #949ba4;
-  background-color: #00000000;
-  transition: all 0.2s ease;
-}
+  #todo::-webkit-scrollbar-thumb {
+    background-color: #00b3ff;
+  }
 
-.btn-config:hover {
-  color: #aeb7c2;
-  background-color: #83838313;
-}
+  #todo::-webkit-scrollbar-track {
+    background-color: #292929;
+  }
 
-.btn-config:active {
-  color: #c4ceda;
-  background-color: #8383832a;
-}
+  #chat-place::-webkit-scrollbar {
+    width: 2px;
+  }
 
-.btn-config-quit {
-  background-color: #00000000;
-  transition: all 0.2s ease;
-}
+  #chat-place::-webkit-scrollbar-thumb {
+    background-color: #4a4a4a;
+  }
 
-.btn-config-quit:hover {
-  color: #ff2c2c;
-  background-color: #ff000013;
-}
+  #chat-place::-webkit-scrollbar-track {
+    background-color: #292929;
+  }
 
-.btn-config-quit:active {
-  color: #ff0000;
-  background-color: #ff000037;
-  box-shadow: 0 0px 10px rgb(255, 0, 0);
-}
+  #userinmembers:hover {
+    background-color: #4c4c4c3d;
+  }
 
-.friendobject:hover .btn-fren-lead {
+  #tags {
+    display: none;
+  }
+
+  #btns-config::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #btns-config::-webkit-scrollbar-thumb {
+    background-color: #2b2b2b;
+  }
+
+  #btns-config::-webkit-scrollbar-track {
+    background-color: #292929;
+  }
+
+  .btn-config {
+    color: #949ba4;
+    background-color: #00000000;
+    transition: all 0.2s ease;
+  }
+
+  .btn-config:hover {
+    color: #aeb7c2;
+    background-color: #83838313;
+  }
+
+  .btn-config:active {
+    color: #c4ceda;
+    background-color: #8383832a;
+  }
+
+  .btn-config-quit {
+    background-color: #00000000;
+    transition: all 0.2s ease;
+  }
+
+  .btn-config-quit:hover {
+    color: #ff2c2c;
+    background-color: #ff000013;
+  }
+
+  .btn-config-quit:active {
+    color: #ff0000;
+    background-color: #ff000037;
+    box-shadow: 0 0px 10px rgb(255, 0, 0);
+  }
+
+  .friendobject:hover .btn-fren-lead {
     background-color: #111113;
-}
-.mic-btn {
+  }
+
+  .mic-btn {
     background-color: rgba(40, 40, 40, 0) !important;
     transition: all 0.5s ease-in-out;
-}
+  }
 
-.mic-btn:hover {
+  .mic-btn:hover {
     background-color: rgba(64, 63, 63, 0.635) !important;
-}
-.PORTALFADE {
+  }
+
+  .PORTALFADE {
     transition: opacity 0.5s ease-in-out;
-}
+  }
 
-.friendobject:hover #tags {
+  .friendobject:hover #tags {
     display: block;
-}
+  }
 
-.chatz {
-  transition: all 0.5s ease-in-out;
-  background-color: #00000000;
-}
+  .chatz {
+    transition: all 0.5s ease-in-out;
+    background-color: #00000000;
+  }
 
-.chatz:hover {
-  background-color: #0000000c;
-  transition: all 0.3 ease-in-out;
-}
+  .chatz:hover {
+    background-color: #0000000c;
+    transition: all 0.3 ease-in-out;
+  }
 
-.friendobject {
+  .friendobject {
     position: relative;
     background: #313338;
     padding: 0px 20px;
-    width:100%;
+    width: 100%;
     height: 60px;
     border-radius: 8px;
     border-bottom: 1px;
@@ -557,245 +946,259 @@
     border-style: solid;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
-}
+  }
 
-.friendobject:hover {
+  .friendobject:hover {
     background: #393b41;
     border-color: #393b41;
-}
+  }
 
-.friendobject img[id] {
+  .friendobject img[id] {
     border-radius: 99999999999999px;
     width: 40px;
     height: 40px;
     margin: -20px 0px;
     box-shadow: 0 0 0px 1px #313338, 0 0 0px 3px #27a14a, 0 0 2px 3px #27a14a;
-}
+  }
 
-.friendnavbtncolor {
+  .friendnavbtncolor {
     color: #949ba4;
     padding: 2px 2px;
     background-color: #1f1f1f00;
     transition: all 0.5s ease-in-out;
-}
+  }
 
-.friendnavbtncolor:hover {
+  .friendnavbtncolor:hover {
     color: #c1cad6;
     background-color: #66666635;
-}
+  }
 
-.friendnavbtncolor:active {
+  .friendnavbtncolor:active {
     color: #e6f1ff;
     background-color: #6363637d;
-}
+  }
 
-.nav-border {
+  .nav-border {
     border-color: #26262b;
-}
+  }
 
-._bg { /* This things works as an <div> position, scale, identifier. */
+  ._bg {
+    /* This things works as an <div> position, scale, identifier. */
     background-color: #00ff6a;
     border-color: #0088ff;
     border-width: 2px;
-}
+  }
 
-.bg-gray-dc-nav {
+  .bg-gray-dc-nav {
     background-color: #1e1f22;
-}
+  }
 
-.bg-gray-dc-server {
-    background-color: #313338; /* 34363b */
-}
+  .bg-gray-dc-server {
+    background-color: #313338;
+    /* 34363b */
+  }
 
-.bg-gray-dc-break {
+  .bg-gray-dc-break {
     background-color: #34363b;
-}
+  }
 
-.bg-gray-dc-dmlist {
+  .bg-gray-dc-dmlist {
     background-color: #2b2d31;
-}
+  }
 
-.button-le-dm {
+  .button-le-dm {
     height: 50px;
     background-color: #25252500;
-}
+  }
 
-.button-le-dm:hover {
+  .button-le-dm:hover {
     background-color: #51515135;
-}
+  }
 
-.button-le-dm:active:focus {
+  .button-le-dm:active:focus {
     background-color: #6d6d6d35;
     stroke: #ffffff;
     transition: all 1s ease-in-out;
     fill: #ffffff;
-}
+  }
 
-.button-le-dm:active:focus svg {
+  .button-le-dm:active:focus svg {
     background-color: #6d6d6d35;
     stroke: #ffffff;
     transition: all 1s ease-in-out;
     fill: #ffffff;
-}
+  }
 
-.button-le-dm:active:focus path {
+  .button-le-dm:active:focus path {
     background-color: #6d6d6d35;
     stroke: #ffffff;
     transition: all 1s ease-in-out;
     fill: #ffffff;
-}
+  }
 
-.dm-font {
+  .dm-font {
     font-weight: 800;
     color: #949ba4;
-}
+  }
 
-#Friends {
-  background-color: rgba(71, 71, 71, 0.751);
-}
+  #Friends {
+    background-color: rgba(71, 71, 71, 0.751);
+  }
 
-.embed {
-  animation: rainbow 15s ease-in-out infinite;
-}
+  .embed {
+    animation: rainbow 15s ease-in-out infinite;
+  }
 
-@keyframes rainbow {
-  0% {
-    border-color: red;
-    box-shadow: inset 20px 0px 20px -15px red;
-  }
-  12.5% {
-    border-color: orange;
-    box-shadow: inset 20px 0px 20px -15px orange;
-  }
-  25% {
-    border-color: yellow;
-    box-shadow: inset 20px 0px 20px -15px yellow;
-  }
-  37.5% {
-    border-color:green;
-    box-shadow: inset 20px 0px 20px -15px green;
-  }
-  50% {
-    border-color:blue;
-    box-shadow: inset 20px 0px 20px -15px blue;
-  }
-  62.5% {
-    border-color: indigo;
-    box-shadow: inset 20px 0px 20px -15px indigo;
-  }
-  75% {
-    border-color:violet;
-    box-shadow: inset 20px 0px 20px -15px violet;
-  }
-  100% {
-    border-color: red;
-    box-shadow: inset 20px 0px 20px -15px red;
-  }
-}
+  @keyframes rainbow {
+    0% {
+      border-color: red;
+      box-shadow: inset 20px 0px 20px -15px red;
+    }
 
-#Friends svg path{
+    12.5% {
+      border-color: orange;
+      box-shadow: inset 20px 0px 20px -15px orange;
+    }
+
+    25% {
+      border-color: yellow;
+      box-shadow: inset 20px 0px 20px -15px yellow;
+    }
+
+    37.5% {
+      border-color: green;
+      box-shadow: inset 20px 0px 20px -15px green;
+    }
+
+    50% {
+      border-color: blue;
+      box-shadow: inset 20px 0px 20px -15px blue;
+    }
+
+    62.5% {
+      border-color: indigo;
+      box-shadow: inset 20px 0px 20px -15px indigo;
+    }
+
+    75% {
+      border-color: violet;
+      box-shadow: inset 20px 0px 20px -15px violet;
+    }
+
+    100% {
+      border-color: red;
+      box-shadow: inset 20px 0px 20px -15px red;
+    }
+  }
+
+  #Friends svg path {
     stroke: #ffffff;
     transition: all 1s ease-in-out;
     fill: #ffffff;
-}
+  }
 
 
-#nitro:hover .tooltip {
-  transition: all 1s ease-in-out;
-  display: block;
-  transform: translateX(15px);
-  box-shadow: 0px 0px 20px 4px #6262627a;
-}
+  #nitro:hover .tooltip {
+    transition: all 1s ease-in-out;
+    display: block;
+    transform: translateX(15px);
+    box-shadow: 0px 0px 20px 4px #6262627a;
+  }
 
-#server {
+  #server {
     margin-bottom: 10px;
-}
+  }
 
-#server:hover {
-  transition: all 0.5s ease-in-out;
-  transform: scale(1.1,1.1);
-  box-shadow: 0px 0px 20px 4px #6262627a;
-}
+  #server:hover {
+    transition: all 0.5s ease-in-out;
+    transform: scale(1.1, 1.1);
+    box-shadow: 0px 0px 20px 4px #6262627a;
+  }
 
-#dmoutline ~ #server:hover {
+  #dmoutline~#server:hover {
     height: 30px;
-}
+  }
 
-#server:hover .tooltip {
-  transition: all 1s ease-in-out;
-  display: block;
-  transform: translateX(15px);
-  box-shadow: 0px 0px 20px 4px #6262627a;
-}
+  #server:hover .tooltip {
+    transition: all 1s ease-in-out;
+    display: block;
+    transform: translateX(15px);
+    box-shadow: 0px 0px 20px 4px #6262627a;
+  }
 
-#dm:hover .tooltip {
-  transition: all 1s ease-in-out;
-  display: block;
-  transform: translateX(15px);
-  box-shadow: 0px 0px 20px 4px #6262627a;
-}
+  #dm:hover .tooltip {
+    transition: all 1s ease-in-out;
+    display: block;
+    transform: translateX(15px);
+    box-shadow: 0px 0px 20px 4px #6262627a;
+  }
 
-#server-title {
+  #server-title {
     box-shadow: inset 0px 100px 30px -20px rgba(0, 0, 0, 0.195);
     background: url('https://images.pexels.com/photos/1906658/pexels-photo-1906658.jpeg');
     background-size: cover;
     background-position-y: -110px;
-}
+  }
 
-.CO:hover, .EX:hover {
+  .CO:hover,
+  .EX:hover {
     background-color: #23a559;
     fill: #23a559;
-}
-.CO:hover svg, .EX:hover svg {
+  }
+
+  .CO:hover svg,
+  .EX:hover svg {
     stroke: #ffffff;
     transition: all 1s ease-in-out;
     fill: #23a559;
-}
-.CO:hover svg path {
+  }
+
+  .CO:hover svg path {
     stroke: #ffffff;
     transition: all 1s ease-in-out;
     fill: #ffffff;
-}
+  }
 
-#server:active, #server:focus {
+  #server:active,
+  #server:focus {
     box-shadow: inset 0 0 20px 0px rgba(255, 255, 255, 0.328);
     transition: all 1s ease-in-out;
-}
+  }
 
-#dm.active {
-  background-color: #fff;
-  transition: all 1s ease-in-out;
-}
+  #dm.active {
+    background-color: #fff;
+    transition: all 1s ease-in-out;
+  }
 
-#server.active {
-  background-color: black;
-  transition: all 1s ease-in-out;
-}
-#dm {
-  /* other styles */
-  transition: background-color 0.2s ease;
-}
-#server {
-  /* other styles */
-  transition: background-color 0.2s ease;
-}
+  #server.active {
+    background-color: black;
+    transition: all 1s ease-in-out;
+  }
 
-#server.active {
-  background-color: #f6e05e;
-}
+  #dm {
+    /* other styles */
+    transition: background-color 0.2s ease;
+  }
 
-#dm.active {
-  background-color: #fff;
-}
+  #server {
+    /* other styles */
+    transition: background-color 0.2s ease;
+  }
 
+  #server.active {
+    background-color: #f6e05e;
+  }
 
+  #dm.active {
+    background-color: #fff;
+  }
 </style>
 <script>
   // Global Variables
-const randomTag = "guest#" + Math.floor(Math.random() * 10000);
+  const randomTag = "guest#" + Math.floor(Math.random() * 10000);
 
-    // Mouseover of White DM Outline, WILL BE ADDED SOON.
-    // Active Server
+  // Mouseover of White DM Outline, WILL BE ADDED SOON.
+  // Active Server
   const server = document.querySelector('#server');
   const dm = document.querySelector('#dm');
 
@@ -817,42 +1220,42 @@ const randomTag = "guest#" + Math.floor(Math.random() * 10000);
 
 
 
- // Discord Profile Picture Fetcher, Will add it soon.
-// Replace <USER_ID> with your friend's user ID
-/*  const userId = '<USER_ID>';
-
-// Replace <DISCORD_TOKEN> with your Discord API token
-const headers = {
-  'Authorization': 'Bot <DISCORD_TOKEN>'
-};
-
-fetch(`https://discord.com/api/users/${userId}`, { headers })
-  .then(response => {
-    if (response.ok) {
-      return response.json();
-    }
-    throw new Error(`Failed to fetch user data: ${response.status}`);
-  })
-  .then(data => {
-    const avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${data.avatar}`;
-    console.log(avatarUrl);
-  })
-  .catch(error => console.error(error)); 
+  // Discord Profile Picture Fetcher, Will add it soon.
+  // Replace <USER_ID> with your friend's user ID
+  /*  const userId = '<USER_ID>';
   
-  The bigass code above meant to fetch Discord API
+  // Replace <DISCORD_TOKEN> with your Discord API token
+  const headers = {
+    'Authorization': 'Bot <DISCORD_TOKEN>'
+  };
+  
+  fetch(`https://discord.com/api/users/${userId}`, { headers })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error(`Failed to fetch user data: ${response.status}`);
+    })
+    .then(data => {
+      const avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${data.avatar}`;
+      console.log(avatarUrl);
+    })
+    .catch(error => console.error(error)); 
+    
+    The bigass code above meant to fetch Discord API
+  
+    */
+  // Cnangeable Blocked
 
-  */ 
- // Cnangeable Blocked
 
 
 
-
- // Use Jquerry.
- let isOnline = true; // initial state
-$('#Blocked, #Online, #All, #Pending').on('click', function() { // PORTALS
-  // Check which button was clicked
-  if ($(this).attr('id') === 'Blocked') { // PORTAL (#All, #Pending)
-    $('#friendlist').html(`
+  // Use Jquerry.
+  let isOnline = true; // initial state
+  $('#Blocked, #Online, #All, #Pending').on('click', function () { // PORTALS
+    // Check which button was clicked
+    if ($(this).attr('id') === 'Blocked') { // PORTAL (#All, #Pending)
+      $('#friendlist').html(`
     
     <div id="friendlist" class="PORTALFADE flex flex-col w-full h-full px-5" style="
     color: red;
@@ -866,8 +1269,8 @@ $('#Blocked, #Online, #All, #Pending').on('click', function() { // PORTALS
                     </div>
     
     `);
-  } else if ($(this).attr('id') === 'Online') {
-    $('#friendlist').html(`
+    } else if ($(this).attr('id') === 'Online') {
+      $('#friendlist').html(`
     
     <span id="Changar"class="PORTALFADE !h-6 w-28 mt-6 mb-6 dm-font text-left pt-2 ml-5 !text-white flex-1">ONLINE - 6</span>
                         <div class=" w-full h-full flex-2 rounded-lg flex flex-col">
@@ -923,10 +1326,10 @@ $('#Blocked, #Online, #All, #Pending').on('click', function() { // PORTALS
                         </div>
     
     `);
-  } else if ($(this).attr('id') === 'All') { // PORTAL MAIN
-    $('#friendlist').html(`
+    } else if ($(this).attr('id') === 'All') { // PORTAL MAIN
+      $('#friendlist').html(`
     
-    <span id="Changar"class="PORTALFADE !h-6 w-28 mt-6 mb-6 dm-font text-left pt-2 ml-5 !text-white flex-1">ALL FRIENDS - 6</span>
+    <span id="Changar"class="PORTALFADE !h-6 w-30 mt-6 mb-6 dm-font text-left pt-2 ml-5 !text-white flex-1">ALL FRIENDS - 6</span>
                         <div class=" w-full h-full flex-2 rounded-lg flex flex-col">
                             <button class="friendobject flex items-center">
                                 <div class="mr-2">
@@ -980,8 +1383,8 @@ $('#Blocked, #Online, #All, #Pending').on('click', function() { // PORTALS
                         </div>
     
     `);
-  } else if ($(this).attr('id') === 'Pending') { // PORTAL 1 (#All, #Blocked)
-    $('#friendlist').html(`<div id="friendlist" class="flex flex-col w-full h-full px-5" style="
+    } else if ($(this).attr('id') === 'Pending') { // PORTAL 1 (#All, #Blocked)
+      $('#friendlist').html(`<div id="friendlist" class="flex flex-col w-full h-full px-5" style="
     color: red;
     align-items: center;
     justify-content: center;
@@ -991,23 +1394,23 @@ $('#Blocked, #Online, #All, #Pending').on('click', function() { // PORTALS
                         <p>Look... This is not discord, I mean yeah.. Platonically.. So this button has no functionality..</p>
                         
                     </div>`)
-  };
-  isOnline = !isOnline; // toggle the state
+    };
+    isOnline = !isOnline; // toggle the state
 
-  $('#friendlist *').css({
-    'transition': 'opacity 0.5s ease',
-    'opacity': 0
+    $('#friendlist *').css({
+      'transition': 'opacity 0.5s ease',
+      'opacity': 0
+    });
+    setTimeout(() => {
+      $('#friendlist *').css('opacity', 1);
+    }, 300);
   });
-  setTimeout(() => {
-    $('#friendlist *').css('opacity', 1);
-  }, 300);
-});
-const blocked = document.querySelector('#Blocked');
-const online = document.querySelector('#Online');
-const all = document.querySelector('#All');
-const pending = document.querySelector('#Pending');
+  const blocked = document.querySelector('#Blocked');
+  const online = document.querySelector('#Online');
+  const all = document.querySelector('#All');
+  const pending = document.querySelector('#Pending');
 
-all.addEventListener('click', () => {
+  all.addEventListener('click', () => {
     all.classList.add('active');
     all.style.backgroundColor = '#6363637d';
     all.style.color = '#e6f1ff';
@@ -1017,9 +1420,9 @@ all.addEventListener('click', () => {
     pending.style.color = '#949ba4';
     blocked.style.backgroundColor = '#1f1f1f00';
     blocked.style.color = '#949ba4';
-});
+  });
 
-online.addEventListener('click', () => {
+  online.addEventListener('click', () => {
     online.classList.add('active');
     online.style.backgroundColor = '#6363637d';
     online.style.color = '#e6f1ff';
@@ -1029,9 +1432,9 @@ online.addEventListener('click', () => {
     pending.style.color = '#949ba4';
     blocked.style.backgroundColor = '#1f1f1f00';
     blocked.style.color = '#949ba4';
-});
+  });
 
-pending.addEventListener('click', () => {
+  pending.addEventListener('click', () => {
     pending.classList.add('active');
     pending.style.backgroundColor = '#6363637d';
     pending.style.color = '#e6f1ff';
@@ -1041,9 +1444,9 @@ pending.addEventListener('click', () => {
     all.style.color = '#949ba4';
     blocked.style.backgroundColor = '#1f1f1f00';
     blocked.style.color = '#949ba4';
-});
+  });
 
-blocked.addEventListener('click', () => {
+  blocked.addEventListener('click', () => {
     blocked.classList.add('active');
     blocked.style.backgroundColor = '#6363637d';
     blocked.style.color = '#e6f1ff';
@@ -1053,108 +1456,136 @@ blocked.addEventListener('click', () => {
     pending.style.color = '#949ba4';
     all.style.backgroundColor = '#1f1f1f00';
     all.style.color = '#949ba4';
-});
-$(document).ready(function() {
-    $("#dm").click(function() {
+  });
+  $(document).ready(function () {
+    $("#dm").click(function () {
       $("#div-where-you-put-chat-and-friend").show();
       $("#server\\.div-where-you-put-chat-and-friend").hide();
     });
 
-    $("#server").click(function() {
+    $("#server").click(function () {
       $("#div-where-you-put-chat-and-friend").hide();
       $("#server\\.div-where-you-put-chat-and-friend").show();
     });
   });
 
- 
 
- //Tag Randomizer
- $(document).ready(function() {
 
-    $("#tag-randomizer").text(randomTag);
+  //Tag Randomizer
+  $(document).ready(function () {
+
+    $(".tag-parent").find("#tag-randomizer").text(randomTag);
   });
 
   // Select the image element within the .friendobject element with an id attribute
-// Select the image element within the .friendobject element with an id attribute
-// Define an array of box-shadow colors to choose from
-const boxShadowColors = ['#27a14a', '#f44336', '#ffeb3b', '#9e9e9e'];
+  // Select the image element within the .friendobject element with an id attribute
+  // Define an array of box-shadow colors to choose from
+  const boxShadowColors = ['#27a14a', '#f44336', '#ffeb3b', '#9e9e9e'];
 
-// Select the image element within the .friendobject element with an id attribute
-$('.friendobject img[id], #f1').each(function() {
-  // Generate a random index to choose a box-shadow color from the array
-  const randomIndex = Math.floor(Math.random() * boxShadowColors.length);
-  const boxShadowColor = boxShadowColors[randomIndex];
-  
-  // Add the box shadow styles to the element with the randomly chosen color
-  $(this).css({
-    'box-shadow': `0 0 0px 1px #313338, 0 0 0px 3px ${boxShadowColor}, 0 0 2px 3px ${boxShadowColor}`
+  // Select the image element within the .friendobject element with an id attribute
+  $('.friendobject img[id], #f1').each(function () {
+    // Generate a random index to choose a box-shadow color from the array
+    const randomIndex = Math.floor(Math.random() * boxShadowColors.length);
+    const boxShadowColor = boxShadowColors[randomIndex];
+
+    // Add the box shadow styles to the element with the randomly chosen color
+    $(this).css({
+      'box-shadow': `0 0 0px 1px #313338, 0 0 0px 3px ${boxShadowColor}, 0 0 2px 3px ${boxShadowColor}`
+    });
   });
-});
 
-$('.Statusrounded').each(function() {
-  // Generate a random index to choose a box-shadow color from the array
-  const randomIndex = Math.floor(Math.random() * boxShadowColors.length);
-  const boxShadowColor = boxShadowColors[randomIndex];
-  
-  // Add the box shadow styles to the element with the randomly chosen color
-  $(this).css({
-    'box-shadow': `0 0 0px 1px #313338, 0 0 0px 3px ${boxShadowColor}, 0 0 2px 3px ${boxShadowColor}`
+  $('.Statusrounded').each(function () {
+    // Generate a random index to choose a box-shadow color from the array
+    const randomIndex = Math.floor(Math.random() * boxShadowColors.length);
+    const boxShadowColor = boxShadowColors[randomIndex];
+
+    // Add the box shadow styles to the element with the randomly chosen color
+    $(this).css({
+      'box-shadow': `0 0 0px 1px #313338, 0 0 0px 3px ${boxShadowColor}, 0 0 2px 3px ${boxShadowColor}`
+    });
   });
-});
 
 
 
 
-// Congiratuion displayer
-$(document).ready(function() {
-  $('.CO').click(function() {
-    $('#configuration').toggle();
+  // Congiratuion displayer
+  $(document).ready(function () {
+    $('.CO').click(function () {
+      $('#configuration').toggle();
+    });
   });
-});
-$(document).ready(function() {
-  $('.EXIT').click(function() {
-    $('#configuration').toggle();
+  $(document).ready(function () {
+    $('.EXIT').click(function () {
+      $('#configuration').toggle();
+    });
   });
-});
 
 
 
   // Working chat
-  $('#kumiwa').keypress(function(e) {
-  if (e.which == 13) {
-    var userMsg = $(this).val();
-    const date = new Date();
-  const hour = date.getHours() >= 12 ? date.getHours() - 12 : date.getHours();
-  const minute = date.getMinutes();
-  const period = date.getHours() >= 12 ? "PM" : "AM";
-  const time = hour + ":" + (minute < 10 ? "0" + minute : minute) + " " + period;
-  const chatPlace = $('#chat-place');
-    var newMsg = $('<div class="message flex flex-col mx-2"><div class="flex visible z-2 mt-2"><img class=" w-[45px] h-[45px] rounded-full mr-[10px]"src="https://i.pinimg.com/736x/fa/fc/e1/fafce1b9206d2eaf31e2193808addde7.jpg" alt="avatar" class="rounded-full"><div><h3 class="text-orange-400 font-semibold">guest</h3><span class="text-gray-400 text-sm">'+time+'</span></div></div><div class="chatz -mt-1 ml-10 rounded-lg"><p class="text-white">' + userMsg + '</p></div></div>');
-    $('#chat-place').append(newMsg);
-    $(this).val('');
-    chatPlace.scrollTop(chatPlace.prop("scrollHeight"));
-  }
-});
+  $('#kumiwa').keypress(function (e) {
+    if (e.which == 13) {
+      var userMsg = $(this).val();
+      const date = new Date();
+      const hour = date.getHours() >= 12 ? date.getHours() - 12 : date.getHours();
+      const minute = date.getMinutes();
+      const period = date.getHours() >= 12 ? "PM" : "AM";
+      const time = hour + ":" + (minute < 10 ? "0" + minute : minute) + " " + period;
+      const chatPlace = $('#chat-place');
+      var newMsg = $('<div class="message flex flex-col mx-2"><div class="flex visible z-2 mt-2"><img class=" w-[45px] h-[45px] rounded-full mr-[10px]"src="https://i.pinimg.com/736x/fa/fc/e1/fafce1b9206d2eaf31e2193808addde7.jpg" alt="avatar" class="rounded-full"><div><h3 class="text-orange-400 font-semibold">guest</h3><span class="text-gray-400 text-sm">' + time + '</span></div></div><div class="chatz -mt-1 ml-10 rounded-lg"><p class="text-white">' + userMsg + '</p></div></div>');
+      $('#chat-place').append(newMsg);
+      $(this).val('');
+      chatPlace.scrollTop(chatPlace.prop("scrollHeight"));
+    }
+  });
 
 
   // Webpage Loader
-$(window).on("load", function() {
-  $.getJSON("https://api.ipify.org?format=json", function(data) {
-        $("#IP-fetcher-fake").text("IP Address Verified " + data.ip +" is VERIFIED");
+  $(window).on("load", function () {
+    $.getJSON("https://api.ipify.org?format=json", function (data) {
+      var ipAddress = data.ip;
+      var location = "";
+
+      $.ajax({
+        url: "https://ipapi.co/" + ipAddress + "/json/",
+        method: "GET",
+        dataType: "json",
+        success: function (data) {
+          location += "City: " + data.city + "<br>";
+          location += "Region: " + data.region + "<br>";
+          location += "Country: " + data.country_name + "<br>";
+
+          var typingDelay = 75;
+
+          var ipText = "$ geoiplookup " + ipAddress + "<br>";
+          var locationArray = location.split("<br>");
+          var ipArray = ipText.split("<br>");
+
+          var ipIndex = 0;
+          var ipInterval = setInterval(function () {
+            $("#IP-fetcher-fake-terminal").append(ipArray[ipIndex] + "<br>");
+            ipIndex++;
+            if (ipIndex >= ipArray.length) {
+              clearInterval(ipInterval);
+
+              var locationIndex = 0;
+              var locationInterval = setInterval(function () {
+                $("#IP-fetcher-fake-terminal").append(locationArray[locationIndex] + "<br>");
+                locationIndex++;
+                if (locationIndex >= locationArray.length) {
+                  clearInterval(locationInterval);
+                }
+                $("#IP-fetcher-fake-terminal").css("height", $("#IP-fetcher-fake-terminal")[0].scrollHeight + "px");
+              }, typingDelay);
+            }
+            $("#IP-fetcher-fake-terminal").css("height", $("#IP-fetcher-fake-terminal")[0].scrollHeight + "px");
+          }, typingDelay);
+        }
+      });
+    });
+
+    $("#loader").delay(5000).fadeOut("slow");
   });
-  $("#loader").delay(3000).fadeOut("slow");
-});
+</script>
 
-
-
-
-
-
-
-
-
-
-
-
-  </script>
 </html>
